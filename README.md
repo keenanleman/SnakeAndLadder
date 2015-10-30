@@ -1,4 +1,4 @@
-# Snake And Ladder Kelompok 6
+# Snake And Ladder Scala Team A 
 
 ## Untuk Kontributor
 

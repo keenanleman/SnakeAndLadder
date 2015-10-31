@@ -14,7 +14,17 @@ Ini kelas-kelas yang sudah ada:
                                                           |
                                                           |
                                                           |
-    KomponenGame Lain                               Melakukan Rendering
+                                                          +
+    KomponenGame Lain                               GameEngine melakukan Rendering
     Membutuhkan update -----> Dilakukan oleh --->   dan Updating
     dan render method
-    
+           |
+           |
+           |
+           +
+       Diturunkan dari
+           |
+           |
+           |
+           +
+        GameObject

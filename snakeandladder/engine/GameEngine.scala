@@ -28,16 +28,16 @@ class GameEngine extends Runnable{
       return
     }
     graphics = bufferStrategy.getDrawGraphics
-    /* Clearing screeen */
+    /* Clearing screen */
     graphics.clearRect(0,0,GameEngine.WINDOW_WIDTH,GameEngine.WINDOW_HEIGHT)
     /* rendering */
-    render
+    mainRender
     Toolkit.getDefaultToolkit.sync
     bufferStrategy.show
     graphics.dispose
   }
-  private def render : Unit = {
-    /* Semua komponen yang harus dirender masuk disisi */
+  private def mainRender : Unit = {
+    /* Semua komponen yang harus dirender masuk disini */
   }
 
   private def updateComponents : Unit = {
@@ -85,7 +85,8 @@ class GameEngine extends Runnable{
        delta += (currentTime - lastTime).asInstanceOf[Double] / GameEngine.DEFAULT_UPDATE_PERIOD
        lastTime = currentTime
        if(delta >= 1){
-         render
+         renderComponents
+         updateComponents
          delta -= 1
        }
     }

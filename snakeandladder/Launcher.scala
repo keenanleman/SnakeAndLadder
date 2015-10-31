@@ -1,6 +1,6 @@
-package snake_and_ladder
+package snakeandladder
 
-import snake_and_ladder.engine.GameEngine
+import snakeandladder.engine.GameEngine
 /* Launcher */
 object Launcher {
   def main(args : Array[String]): Unit ={

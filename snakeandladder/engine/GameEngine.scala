@@ -1,4 +1,4 @@
-package snake_and_ladder.engine
+package snakeandladder.engine
 
 import java.awt.image.BufferStrategy
 import java.awt.{Color, Graphics, Toolkit}

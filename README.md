@@ -6,6 +6,9 @@ Ini kelas-kelas yang sudah ada:
 
 * Kelas GameCanvas: Display untuk game, menggunakan kelas _Canvas_ dan _JFrame_
 * Kelas GameEngine: Isinya: GameLoop untuk pengaturan FPS, Mekanisme rendering dan update
+* Kelas GameObject: Semua benda didalam game merupakan turunan dari kelas ini
+* Kelas Tile: Representasi dari kotak-kotak didalam papan permainan
+* Kelas Board: Representasi dari papan permainan, mempopulasi tile-tile yang dibutuhkan untuk membuat papan permainan
 * Object Launcher: Kelas Tester
 
 ### Mekanisme
@@ -28,3 +31,15 @@ Ini kelas-kelas yang sudah ada:
            |
            +
         GameObject
+        
+        
+### Relasi Board, Tile, dan GameEngine
+   
+    GameEngine -----> me-render -----> Board
+                                         |
+                                         |
+                                         |
+                                         +
+     Masing-masing tile <------- Me-render tile-tile sebagai elemen
+     me-render dirinya           pembentuk board
+     sendiri

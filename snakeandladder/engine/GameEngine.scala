@@ -3,6 +3,8 @@ package snakeandladder.engine
 import java.awt.image.BufferStrategy
 import java.awt.{Color, Graphics, Toolkit}
 
+import snakeandladder.gameobject.Board
+
 class GameEngine extends Runnable{
   private var mainThread : Thread = null
   private var gameDisplay : GameDisplay = null
@@ -10,11 +12,17 @@ class GameEngine extends Runnable{
   private var bufferStrategy : BufferStrategy = null
   private var graphics : Graphics = null
 
+  private var board : Board = null
+
   /**
    * Ada banyak komponen yang akan di inisialisasi disini
    */
   private def initComponents : Unit = {
+    /* inisiasi gameDisplay */
     gameDisplay = new GameDisplay
+    /* inisiasi game board */
+    board = new Board(0,0,10,10)
+    board.initTiles
   }
 
   /**
@@ -38,6 +46,9 @@ class GameEngine extends Runnable{
   }
   private def mainRender : Unit = {
     /* Semua komponen yang harus dirender masuk disini */
+
+    /* render board */
+    board.render(graphics)
   }
 
   private def updateComponents : Unit = {

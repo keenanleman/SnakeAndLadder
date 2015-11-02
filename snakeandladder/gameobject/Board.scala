@@ -18,8 +18,8 @@ class Board(initialX : Int, initialY : Int, numRow : Int, numCol : Int) extends 
    * Method untuk mempopulasi board dengan tile
    */
   def initTiles : Unit = {
-    var currentX = 0;
-    var currentY = 0;
+    var currentX = x
+    var currentY = y
     var numOfTiles = numRow * numCol
     var rightToLeft : Boolean = true
     for (i <- 0 until numRow) {

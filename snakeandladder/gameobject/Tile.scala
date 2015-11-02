@@ -15,15 +15,15 @@ class Tile(initialX : Int, initialY : Int, tileNumber : Int, color : Color) exte
   /**
    * Objek Rengtangle yang akan menjadi tile
    */
-  private val rectangle : Rectangle = new Rectangle(initialX, initialY,Tile.TILE_SIZE,Tile.TILE_SIZE )
+  private val rectangle : Rectangle = new Rectangle(x, y,Tile.TILE_SIZE,Tile.TILE_SIZE )
   /**
    * Posisi x nomor tile
    */
-  private val titleX : Float = ((Tile.TILE_SIZE/2.0) + initialX).asInstanceOf[Float]
+  private val titleX : Float = ((Tile.TILE_SIZE/2.0) + x).asInstanceOf[Float]
   /**
    * Posisi y nomor tile
    */
-  private val titleY : Float = ((Tile.TILE_SIZE/2.0) + initialY).asInstanceOf[Float]
+  private val titleY : Float = ((Tile.TILE_SIZE/2.0) + y).asInstanceOf[Float]
 
   /**
    * Merender tile

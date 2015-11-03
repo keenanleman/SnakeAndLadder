@@ -42,7 +42,7 @@ class Board(initialX : Int, initialY : Int, numRow : Int, numCol : Int) extends 
       if(rightToLeft){
         currentX -= Tile.TILE_SIZE + Tile.TILE_BORDER_THICKNESS
       }else{
-        currentX = 0
+        currentX += Tile.TILE_SIZE + Tile.TILE_BORDER_THICKNESS
       }
       rightToLeft = !rightToLeft
     }

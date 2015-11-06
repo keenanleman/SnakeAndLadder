@@ -7,9 +7,9 @@ import java.awt.Graphics
  * @param initialX posisi awal x
  * @param initialY posisi awal y
  */
-abstract class GameObject(initialX : Int,initialY : Int) {
-  protected var x : Int = initialX
-  protected var y : Int = initialY
+abstract class GameObject(initialX : Double ,initialY : Double) {
+  protected var x : Double = initialX
+  protected var y : Double = initialY
   /**
    * Setiap objek/benda didalam game memiliki method render yang digunakan untuk
    * merender dirinya sendiri

@@ -10,7 +10,7 @@ import java.awt.{Color, Graphics}
  * @param numRow jumlah baris tile dalam board
  * @param numCol jumlah kolom tile dalam board
  */
-class Board(initialX : Int, initialY : Int, numRow : Int, numCol : Int) extends GameObject(initialX,initialY){
+class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) extends GameObject(initialX,initialY){
   /* multidimensional array dari tile */
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
 

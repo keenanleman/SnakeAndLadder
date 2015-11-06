@@ -1,6 +1,7 @@
 package snakeandladder.gameobject
 
 import java.awt._
+import java.awt.geom.Rectangle2D
 
 import scala.util.Random
 
@@ -11,11 +12,11 @@ import scala.util.Random
  * @param tileNumber nomor yang akan ditampilkan pada tile
  * @param color warna tile
  */
-class Tile(initialX : Int, initialY : Int, tileNumber : Int, color : Color) extends GameObject(initialX,initialY){
+class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color) extends GameObject(initialX,initialY){
   /**
    * Objek Rengtangle yang akan menjadi tile
    */
-  private val rectangle : Rectangle = new Rectangle(x, y,Tile.TILE_SIZE,Tile.TILE_SIZE )
+  private val rectangle : Rectangle2D = new Rectangle2D.Double(x, y,Tile.TILE_SIZE,Tile.TILE_SIZE )
   /**
    * Posisi x nomor tile
    */

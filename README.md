@@ -11,6 +11,10 @@ Ini kelas-kelas yang sudah ada:
 * Kelas Board: Representasi dari papan permainan, mempopulasi tile-tile yang dibutuhkan untuk membuat papan permainan
 * Object Launcher: Kelas Tester
 
+### Diagram Program
+
+![Diagram Program](Plan.jpg)
+
 ### Mekanisme
 
     GameDisplay ----> Menyediakan Media Untuk ----> GameEngine

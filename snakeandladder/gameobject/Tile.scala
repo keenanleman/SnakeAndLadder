@@ -27,6 +27,12 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
   private val titleY : Float = ((Tile.TILE_SIZE/2.0) + y).asInstanceOf[Float]
 
   /**
+   * Mengembalikan nomor dari tile
+   * @return nomor dari tile
+   */
+  def getTileNumber : Int = tileNumber
+
+  /**
    * Merender tile
    * @param graphics graphics dari canvas pada kelas GameDisplay
    */

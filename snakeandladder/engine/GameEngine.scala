@@ -1,7 +1,7 @@
 package snakeandladder.engine
 
 import java.awt.image.BufferStrategy
-import java.awt.{Color, Graphics, Toolkit}
+import java.awt.{Color, Graphics,Graphics2D, Toolkit,RenderingHints}
 
 import snakeandladder.gameobject.Board
 
@@ -36,6 +36,11 @@ class GameEngine extends Runnable{
       return
     }
     graphics = bufferStrategy.getDrawGraphics
+
+    /* Apakah menggunakan antialias */
+    if(GameEngine.USE_ANTIALIAS){
+      antialiasing(graphics)
+    }
     /* Clearing screen */
     graphics.clearRect(0,0,GameEngine.WINDOW_WIDTH,GameEngine.WINDOW_HEIGHT)
     /* rendering */
@@ -53,6 +58,16 @@ class GameEngine extends Runnable{
 
   private def updateComponents : Unit = {
     /* Semua komponen yang mempunyai event masuk disini */
+  }
+
+  private def antialiasing(graphics : Graphics) : Unit = {
+    /**
+     * Mengkonfigurasi graphics untuk mengaktifkan antialiasing
+     */
+    var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
   }
 
 
@@ -111,5 +126,6 @@ object GameEngine {
   val WINDOW_HEIGHT : Int = 800
   val DEFAULT_FPS : Int = 60
   val DEFAULT_UPDATE_PERIOD : Double = 1000000000 / GameEngine.DEFAULT_FPS
+  var USE_ANTIALIAS : Boolean = true
 }
 

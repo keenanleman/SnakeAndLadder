@@ -4,7 +4,7 @@ import java.awt.{Color, Graphics}
 
 /**
  * Kelas board, representasi dari papan permainan, kelas ini mepopulasi tile sesuai dengan masukan
- * numRow dan numCo
+ * numRow dan numCol
  * @param initialX posisi awal x
  * @param initialY posisi awal y
  * @param numRow jumlah baris tile dalam board
@@ -23,13 +23,13 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
     var numOfTiles = numRow * numCol
     var rightToLeft : Boolean = true
     for (i <- 0 until numRow) {
-      var lastColor : Color = Tile.getTileColor
       for (j <- 0 until numCol) {
-        var currentColor = Tile.getTileColor
-        while(currentColor.equals(lastColor)) {
-          currentColor = Tile.getTileColor
+        var currentColor : Color = null
+        if(numOfTiles % 2 == 1){
+          currentColor = Tile.TILE_COLOR_ODD
+        }else{
+          currentColor = Tile.TILE_COLOR_EVEN
         }
-        lastColor = currentColor
         tiles(i)(j) = new Tile(currentX,currentY,numOfTiles,currentColor)
         numOfTiles -= 1
         if(rightToLeft) {

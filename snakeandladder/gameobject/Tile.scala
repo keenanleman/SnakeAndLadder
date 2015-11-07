@@ -54,7 +54,18 @@ object Tile{
    */
   val TILE_BORDER_THICKNESS = 2
   /**
+   * Warna tile bernomor ganjil
+   */
+  val TILE_COLOR_ODD = Color.GRAY
+  /**
+   * Warna tile bernomor genap
+   */
+  val TILE_COLOR_EVEN = Color.WHITE
+
+
+  /**
    * Warna tile
+   * @deprecated warna tile di tentukan oleh TILE_COLOR_EVEN dan TILE_COLOR_ODD
    */
   val TILE_COLORS : Array[Color] = Array(
     Color.BLUE,
@@ -65,6 +76,7 @@ object Tile{
 
   /**
    * Merandom warna tile
+   * @deprecated warna tile di tentukan oleh TILE_COLOR_EVEN dan TILE_COLOR_ODD
    * @return
    */
   def getTileColor : Color = Tile.TILE_COLORS(Tile.random.nextInt(Tile.TILE_COLOR_NUM))

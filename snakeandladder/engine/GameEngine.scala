@@ -3,7 +3,7 @@ package snakeandladder.engine
 import java.awt.image.BufferStrategy
 import java.awt.{Color, Graphics,Graphics2D, Toolkit,RenderingHints}
 
-import snakeandladder.gameobject.Board
+import snakeandladder.gameobject.{Player, Board}
 
 class GameEngine extends Runnable{
   private var mainThread : Thread = null
@@ -20,9 +20,13 @@ class GameEngine extends Runnable{
   private def initComponents : Unit = {
     /* inisiasi gameDisplay */
     gameDisplay = new GameDisplay
-    /* inisiasi game board */
-    board = new Board(0,0,10,10)
-    board.initTiles
+    /* Bagian ini akan dipindahkan ke GameState*****************/
+      /* inisiasi game board */
+      board = new Board(0,0,10,10)
+      board.initTiles
+      /* Percobaan inisiasi player */
+      board.player = new Player(board.getTileByNumber(1),board)
+    /***********************************************************/
   }
 
   /**
@@ -52,12 +56,20 @@ class GameEngine extends Runnable{
   private def mainRender : Unit = {
     /* Semua komponen yang harus dirender masuk disini */
 
+    /* Bagian ini akan dipindahkan ke GameState*****************/
     /* render board */
     board.render(graphics)
+    /***********************************************************/
+
   }
 
   private def updateComponents : Unit = {
     /* Semua komponen yang mempunyai event masuk disini */
+
+    /* Bagian ini akan dipindahkan ke GameState*****************/
+    board.update()
+    /***********************************************************/
+
   }
 
   private def antialiasing(graphics : Graphics) : Unit = {

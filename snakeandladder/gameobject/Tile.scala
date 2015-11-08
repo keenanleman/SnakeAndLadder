@@ -20,15 +20,15 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
   /**
    * Posisi x nomor tile
    */
-  private val titleX : Float = ((Tile.TILE_SIZE/2.0) + x).asInstanceOf[Float]
+  private val titleX : Float = (Tile.TILE_SIZE - 25 + x).asInstanceOf[Float]
   /**
    * Posisi y nomor tile
    */
-  private val titleY : Float = ((Tile.TILE_SIZE/2.0) + y).asInstanceOf[Float]
+  private val titleY : Float = (Tile.TILE_SIZE - 5 + y).asInstanceOf[Float]
 
   /**
-   * Mengembalikan nomor dari tile
-   * @return nomor dari tile
+   * Mengembalikan nomor tile
+   * @return nomor tile
    */
   def getTileNumber : Int = tileNumber
 
@@ -56,10 +56,6 @@ object Tile{
    */
   val TILE_COLOR_NUM = 4
   /**
-   * Ketebalan garis
-   */
-  val TILE_BORDER_THICKNESS = 2
-  /**
    * Warna tile bernomor ganjil
    */
   val TILE_COLOR_ODD = Color.GRAY
@@ -67,6 +63,12 @@ object Tile{
    * Warna tile bernomor genap
    */
   val TILE_COLOR_EVEN = Color.WHITE
+
+  /**
+   * Ketebalan garis
+   * @deprecated tidak tidak lagi memiliki border
+   */
+  val TILE_BORDER_THICKNESS = 2
 
 
   /**

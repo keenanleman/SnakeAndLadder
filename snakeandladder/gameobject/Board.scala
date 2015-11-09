@@ -1,6 +1,7 @@
 package snakeandladder.gameobject
 
 import java.awt.{Color, Graphics}
+import java.util.Random
 
 /**
  * Kelas board, representasi dari papan permainan, kelas ini mepopulasi tile sesuai dengan masukan
@@ -15,13 +16,62 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)
 
+  /**
+    * Random generator
+    */
+  private val random : Random = new Random(System.nanoTime())
+
+  /**
+    * Array untuk menyimpan object Snake
+    */
+  private var snakes : Array[Snake] = new Array[Snake](Board.numSnake)
+
   /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
   var player : Player = _
+
+
+  /* Menginisiasi board */
+  initBoard
+
+  /**
+    * Method untuk menginisiasi Board
+    */
+  def initBoard : Unit = {
+    initTiles
+    initSnake
+  }
+
+  /**
+    * Method untuk mempopulasi board dengan tile
+    */
+  private def initSnake : Unit = {
+    var from : Int = 0
+    var to : Int = 0
+    var maxIndex = (numRow * numCol) + 1
+    for(i <- 0 until Board.numSnake){
+      from = 1 + random.nextInt(maxIndex - 1)
+      while(getTileByNumber(from).isHasSnake){
+        from = 1 + random.nextInt(maxIndex - 1)
+      }
+      var fromTile : Tile = getTileByNumber(from)
+      fromTile.gotSnake
+
+      to = 1 + random.nextInt(maxIndex - 1)
+      while(to >= from || getTileByNumber(to).isHasSnake){
+        to = 1 + random.nextInt(maxIndex - 1)
+      }
+      var toTile : Tile = getTileByNumber(to)
+      toTile.gotSnake
+      println("from " + from)
+      println("to " + to)
+      snakes(i) = new Snake(fromTile, toTile)
+    }
+  }
 
   /**
    * Method untuk mempopulasi board dengan tile
    */
-  def initTiles : Unit = {
+  private def initTiles : Unit = {
     var currentX = x
     var currentY = y
     var numOfTiles = numRow * numCol
@@ -53,6 +103,11 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
     }
   }
 
+  /**
+    * Mengembalikan tile berdasarkan nomor tile
+    * @param number nomor tile
+    * @return tile yang dipilih berdasarkan nomor tile
+    */
   def getTileByNumber(number : Int) : Tile = tilesRefNum(number - 1)
 
   /**
@@ -64,6 +119,9 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
       for (j <- 0 until numCol) {
         tiles(i)(j).render(graphics)
       }
+    }
+    for(i <- 0 until Board.numSnake){
+      snakes(i).render(graphics)
     }
     player.render(graphics)
   }
@@ -79,3 +137,10 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   }
 }
 
+
+object Board{
+  /**
+   * Banyak ular dalam sebuah board
+   */
+  val numSnake : Int = 5
+}

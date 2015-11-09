@@ -3,8 +3,6 @@ package snakeandladder.gameobject
 import java.awt._
 import java.awt.geom.Rectangle2D
 
-import scala.util.Random
-
 /**
  * Representasi dari tile pada board
  * @param initialX posisi awal x
@@ -27,10 +25,30 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
   private val titleY : Float = (Tile.TILE_SIZE - 5 + y).asInstanceOf[Float]
 
   /**
+    * Status tile mengenai kepemilikan snake
+    */
+  private var hasSnake : Boolean = false
+
+  /**
    * Mengembalikan nomor tile
    * @return nomor tile
    */
   def getTileNumber : Int = tileNumber
+
+  /**
+   * Mengembalikan status kepemilikan ular
+   * @return
+   */
+  def isHasSnake : Boolean = {
+    return hasSnake
+  }
+
+  /**
+   * Menandai status kepemilikan ular
+   */
+  def gotSnake : Unit = {
+    hasSnake = true
+  }
 
   /**
    * Merender tile
@@ -46,7 +64,6 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
 }
 
 object Tile{
-  private val random : Random = new Random(System.nanoTime());
   /**
    * Ukuran tile
    */
@@ -63,29 +80,4 @@ object Tile{
    * Warna tile bernomor genap
    */
   val TILE_COLOR_EVEN = Color.WHITE
-
-  /**
-   * Ketebalan garis
-   * @deprecated tidak tidak lagi memiliki border
-   */
-  val TILE_BORDER_THICKNESS = 2
-
-
-  /**
-   * Warna tile
-   * @deprecated warna tile di tentukan oleh TILE_COLOR_EVEN dan TILE_COLOR_ODD
-   */
-  val TILE_COLORS : Array[Color] = Array(
-    Color.BLUE,
-    Color.GREEN,
-    Color.GRAY,
-    Color.RED
-  )
-
-  /**
-   * Merandom warna tile
-   * @deprecated warna tile di tentukan oleh TILE_COLOR_EVEN dan TILE_COLOR_ODD
-   * @return
-   */
-  def getTileColor : Color = Tile.TILE_COLORS(Tile.random.nextInt(Tile.TILE_COLOR_NUM))
 }

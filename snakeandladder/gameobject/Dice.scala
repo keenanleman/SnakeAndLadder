@@ -74,7 +74,16 @@ class Dice(initialX : Double, initialY : Double) extends GameObject(initialX, in
 }
 
 object Dice{
+  /**
+    * Ukuran dadu
+    */
   val DICE_SIZE : Double = 40
+  /**
+    * Menentukan posisi dadu
+    */
   val DICE_POSTITION : Double = (Tile.TILE_SIZE - Player.PLAYER_SIZE) / 2
+  /**
+    * Durasi animasi perputaran dadu
+    */
   val ROLL_TIME : Int = 2 * GameEngine.DEFAULT_FPS
 }

@@ -16,6 +16,9 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)
 
+  /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
+  private var dice : Dice = new Dice(numRow * Tile.TILE_SIZE,0)
+
   /**
     * Random generator
     */
@@ -115,6 +118,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
    * @param graphics graphics dari canvas pada kelas GameDisplay
    */
   override def render(graphics: Graphics) : Unit = {
+    /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
     for (i <- 0 until numRow) {
       for (j <- 0 until numCol) {
         tiles(i)(j).render(graphics)
@@ -124,6 +128,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
       snakes(i).render(graphics)
     }
     player.render(graphics)
+    dice.render(graphics)
   }
 
   /**

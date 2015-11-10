@@ -6,7 +6,7 @@ import java.util.Random
 
 import snakeandladder.engine.GameEngine
 
-class Dice(initialX : Double, initialY : Double) extends GameObject(initialX, initialY) with GameObjectEvent{
+class Dice(initialX : Double, initialY : Double) extends GameObject(initialX, initialY) with GameObjectUpdate{
   x+= Dice.DICE_POSTITION
   y+= Dice.DICE_POSTITION
 

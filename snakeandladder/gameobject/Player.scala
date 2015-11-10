@@ -8,7 +8,7 @@ import java.awt.geom.RoundRectangle2D
  * @param initialTile tile lokasi awal player
  * @param board board tempat player di mainkan
  */
-class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.getX, initialTile.getY) with GameObjectEvent{
+class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.getX, initialTile.getY) with GameObjectUpdate{
   x += Player.PLAYER_REL_POS_TO_TILE
   y += Player.PLAYER_REL_POS_TO_TILE
   /**

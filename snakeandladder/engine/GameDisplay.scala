@@ -23,7 +23,7 @@ class GameDisplay(){
   displayCanvas.setPreferredSize(new Dimension(width,height))
   displayCanvas.setMaximumSize(new Dimension(width,height))
   displayCanvas.setMinimumSize(new Dimension(width,height))
-  displayCanvas.setFocusable(false)
+  displayCanvas.setFocusable(true)
   displayFrame.add(displayCanvas)
   displayFrame.setVisible(true)
   displayFrame.pack()

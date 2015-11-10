@@ -11,7 +11,7 @@ import java.util.Random
  * @param numRow jumlah baris tile dalam board
  * @param numCol jumlah kolom tile dalam board
  */
-class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) extends GameObject(initialX,initialY) with GameObjectEvent{
+class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) extends GameObject(initialX,initialY) with GameObjectUpdate{
   /* multidimensional array dari tile */
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)

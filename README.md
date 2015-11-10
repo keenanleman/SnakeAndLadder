@@ -12,7 +12,7 @@
 * Kelas Player: Representasi dari pemain
 * Kelas Snake : Representasi dari ular
 * Kelas Dadu: Representasi dari dadu
-* Trait GameObjectEvent: Interface/Trait bagi GameObject yang memiliki event/update saat runtime
+* Trait GameObjectUpdate: Interface/Trait bagi GameObject yang memiliki update saat runtime
 * PointToPointIterator: Iterator yang dapat digunakan untuk mempermudah pembuatan ular(sudah) dan tangga(belum)
 * Kelas GameEvent: Menjadi event dalam game
 * Trait GameEventBroadcaster: Menjadi sumber event(broadcaster) dalam game
@@ -37,6 +37,7 @@ Jika ada pertanyaan mengenai source code yang sudah dibuat bisa di tanya langsun
 * Samuel: GameState(belum)
 * Marcho: GameStage(belum)
 * Rendra: Ladder(belum)
+* Keenan: sisanya
 
 ### Kelas-kelas yang belum punya kontributor
 
@@ -70,13 +71,18 @@ Jika ada pertanyaan mengenai source code yang sudah dibuat bisa di tanya langsun
         GameObject
         
         
-### Relasi Board, Tile, dan GameEngine
+### Relasi Board, Tile, Player, Snake, Ladder, Dadu, dan GameEngine
    
     GameEngine -----> me-render -----> Board
                                          |
                                          |
                                          |
                                          +
-     Masing-masing tile <------- Me-render tile-tile sebagai elemen
-     me-render dirinya           pembentuk board
-     sendiri
+     Masing-masing tile <------- Me-render elemen-elemen
+     me-render dirinya           pembentuk dan pelengkap board
+     sendiri                              |
+                                          |
+                                          |
+                                          +
+                                 Tile, Player, Snake, Ladder, Dadu
+    

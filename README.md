@@ -11,6 +11,7 @@
 * Kelas Board: Representasi dari papan permainan, mempopulasi tile-tile yang dibutuhkan untuk membuat papan permainan
 * Kelas Player: Representasi dari pemain
 * Kelas Snake : Representasi dari ular
+* Kelas Dadu: Representasi dari dadu
 * Trait GameObjectEvent: Interface/Trait bagi GameObject yang memiliki event/update saat runtime
 * PointToPointIterator: Iterator yang dapat digunakan untuk mempermudah pembuatan ular(sudah) dan tangga(belum)
 * Object Launcher: Kelas Tester
@@ -22,7 +23,6 @@
 * Kelas GameStage: Untuk me-manage jalannya permainan
 * Kelas GameObjectManager: Untuk me-manage GameObject dalam sebuah GameState atau GameObject lain
 * Kelas AssetManager: Untuk me-manage resource(ex: gambar, musik,etc)
-* Kelas Dadu: Representasi dari dadu
 
 ### Diagram Program (Outdated)
 

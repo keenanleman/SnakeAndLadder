@@ -42,6 +42,8 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   def initBoard : Unit = {
     initTiles
     initSnake
+    player = new Player(getTileByNumber(1),this)
+    player.moveToTile(tiles(0)(9))
   }
 
   /**
@@ -65,9 +67,8 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
       }
       var toTile : Tile = getTileByNumber(to)
       toTile.gotSnake
-      println("from " + from)
-      println("to " + to)
       snakes(i) = new Snake(fromTile, toTile)
+      fromTile.setSnakeHead(snakes(i))
     }
   }
 
@@ -138,7 +139,6 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   override def update(): Unit = {
     /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
     player.update()
-    player.moveToTile(tiles(0)(9))
   }
 }
 

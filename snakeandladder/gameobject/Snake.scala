@@ -4,8 +4,7 @@ import java.awt._
 import java.awt.geom.{Ellipse2D, Point2D, Path2D}
 import java.util.Random
 
-import com.sun.javafx.geom.RoundRectangle2D
-import snakeandladder.utility.{PointToPointIterator}
+import snakeandladder.utility.{DynamicLineIterator, PointToPointIterator}
 
 /**
  * Representasi dari ular pada board
@@ -110,6 +109,8 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
       Snake.SNAKE_HEAD_HEIGHT)
   }
 
+  def getDrawable : Path2D = snake
+  def getTo : Tile = to
   /**
    * Digunakan untuk merender drawable dari snake
    * @param graphics graphics dari canvas pada kelas GameDisplay

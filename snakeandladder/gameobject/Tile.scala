@@ -29,6 +29,12 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
     */
   private var hasSnake : Boolean = false
 
+  private var snakeHead : Snake = null
+  def setSnakeHead(snakeHead : Snake): Unit ={
+    this.snakeHead = snakeHead
+  }
+  def getSnakeHead : Snake = snakeHead
+
   /**
    * Mengembalikan nomor tile
    * @return nomor tile

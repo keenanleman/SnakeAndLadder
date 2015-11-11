@@ -2,9 +2,7 @@ package snakeandladder.gameobject
 
 import java.awt._
 import java.awt.geom.{Ellipse2D, Point2D, Path2D}
-import java.util.Random
 
-import com.sun.javafx.geom.RoundRectangle2D
 import snakeandladder.utility.{PointToPointIterator}
 
 /**
@@ -127,8 +125,7 @@ object Snake{
   /**
    * Panjang gelombang ular / lamda
    */
-  val random = new Random(System.nanoTime())
-  val CURVE_GAP : Int = random.nextInt(100) + 29
+  val CURVE_GAP : Int = 60
   /**
    * Bilangan peng-kali untuk  jarak terdekat titik-titik bezier dari titik seimbang gelombang
    */
@@ -140,9 +137,9 @@ object Snake{
   /**
    * Lebar dari kepala ular
    */
-  val SNAKE_HEAD_WIDTH : Double = 25
+  val SNAKE_HEAD_WIDTH : Double = 20
   /**
    * Tinggi dari kepala ular
    */
-  val SNAKE_HEAD_HEIGHT : Double = 15
+  val SNAKE_HEAD_HEIGHT : Double = 10
 }

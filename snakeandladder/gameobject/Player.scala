@@ -3,6 +3,8 @@ package snakeandladder.gameobject
 import java.awt.{Color, Graphics2D, Graphics}
 import java.awt.geom.RoundRectangle2D
 
+import snakeandladder.utility.DynamicLineIterator
+
 /**
  * Merepresentasikan pemain
  * @param initialTile tile lokasi awal player
@@ -19,6 +21,8 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    * Posisi tile tempat player di tempatkan
    */
   private var currentTile : Int = initialTile.getTileNumber
+  private var followSnake : Snake = null
+  private var snakeIterator : DynamicLineIterator = null
   /**
    * Posisi tempat player akan dipindahkan
    */
@@ -40,12 +44,17 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    * terjadi saat runtime
    */
   override def update(): Unit = {
-    if(playerDrawable.x < x) {
+    if(followSnake != null && (playerDrawable.x != x && playerDrawable.y != y)){
+      playerDrawable.x = x
+      playerDrawable.y = y
+    }else if(playerDrawable.x < x) {
       playerDrawable.x += Player.MOVE_SPEED
     }else if(playerDrawable.x > x) {
       playerDrawable.x -= Player.MOVE_SPEED
     }else if(playerDrawable.y > y) {
       playerDrawable.y -= Player.MOVE_SPEED
+    }else if(followSnake != null) {
+      moveToFollowSnake
     }else if(destinationTile > currentTile){
       moveToNextTile
     }
@@ -56,8 +65,31 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    */
   def moveToNextTile : Unit = {
     currentTile += 1
-    x = board.getTileByNumber(currentTile + 1).getX + Player.PLAYER_REL_POS_TO_TILE
-    y = board.getTileByNumber(currentTile + 1).getY + Player.PLAYER_REL_POS_TO_TILE
+    var tile : Tile = board.getTileByNumber(currentTile)
+    if(tile.isHasSnake && tile.getSnakeHead != null && followSnake == null){
+      destinationTile = tile.getSnakeHead.getTo.getTileNumber
+      println(destinationTile)
+      followSnake = tile.getSnakeHead
+      snakeIterator = new DynamicLineIterator(followSnake.getDrawable)
+    }else{
+      x = board.getTileByNumber(currentTile + 1).getX + Player.PLAYER_REL_POS_TO_TILE
+      y = board.getTileByNumber(currentTile + 1).getY + Player.PLAYER_REL_POS_TO_TILE
+    }
+  }
+
+  /**
+    * Memindahkah posisi player mengikuti snake
+    */
+  def moveToFollowSnake : Unit = {
+    if(!snakeIterator.hasNext){
+      x = snakeIterator.getPoint.getX - Player.PLAYER_REL_POS_TO_TILE
+      y = snakeIterator.getPoint.getY - Player.PLAYER_REL_POS_TO_TILE
+      snakeIterator.next
+    }else{
+      x = followSnake.getTo.getX + Player.PLAYER_REL_POS_TO_TILE
+      y = followSnake.getTo.getY + Player.PLAYER_REL_POS_TO_TILE
+      followSnake = null
+    }
   }
 
   /**

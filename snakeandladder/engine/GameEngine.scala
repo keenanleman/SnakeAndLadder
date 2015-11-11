@@ -23,8 +23,6 @@ class GameEngine extends Runnable{
     /* Bagian ini akan dipindahkan ke GameState*****************/
       /* inisiasi game board */
       board = new Board(0,0,10,10)
-      /* Percobaan inisiasi player */
-      board.player = new Player(board.getTileByNumber(1),board)
     /***********************************************************/
   }
 

@@ -3,7 +3,7 @@ package snakeandladder.gameevent
 import java.util.{EventObject, ArrayList, Iterator}
 
 trait GameEventBroadcaster {
-  private val listOfListener : ArrayList[GameEventListener] = new ArrayList[GameEventListener]()
+  protected val listOfListener : ArrayList[GameEventListener] = new ArrayList[GameEventListener]()
 
   def addGameListener(gameEventListener: GameEventListener) : Unit = {
     synchronized(
@@ -17,10 +17,10 @@ trait GameEventBroadcaster {
     )
   }
 
-  def triggerGameEvent(event : EventObject): Unit = {
+  def triggerGameEvent(event : GameEvent): Unit = {
     var listenerIterator : Iterator[GameEventListener] =  listOfListener.iterator()
     while(listenerIterator.hasNext){
-      listenerIterator.next().gameEventTriggered(new GameEvent(this,event))
+      listenerIterator.next().gameEventTriggered(new GameEvent(this,event.getRealEventObject))
     }
   }
 }

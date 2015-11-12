@@ -2,7 +2,6 @@ package snakeandladder.gameobject
 
 import java.awt._
 import java.awt.geom.{Ellipse2D, Point2D, Path2D}
-import java.util.Random
 
 import snakeandladder.utility.{DynamicLineIterator, PointToPointIterator}
 
@@ -25,7 +24,7 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
   /**
    * Path/drawable yang menjadi badan ular
    */
-  private val snake : Path2D.Double = new Path2D.Double()
+  private val snakeDrawable : Path2D.Double = new Path2D.Double()
   /**
    * Shape/drawable yang menjadi kepala ular
    */
@@ -79,17 +78,17 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
     var nextY = iterator.getCurrentY
 
     var negator : Int = -1
-    snake.moveTo(currentX, currentY)
+    snakeDrawable.moveTo(currentX, currentY)
     while (iterator.hasNext) {
       if(!iterator.isLastIteration) {
-        snake.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+        snakeDrawable.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
           currentY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
           nextX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
           nextY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
           nextX,
           nextY)
       }else{
-        snake.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+        snakeDrawable.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
           currentY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
           nextX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
           nextY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
@@ -109,7 +108,7 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
       Snake.SNAKE_HEAD_HEIGHT)
   }
 
-  def getDrawable : Path2D = snake
+  def getDrawable : Path2D = snakeDrawable
   def getTo : Tile = to
   /**
    * Digunakan untuk merender drawable dari snake
@@ -118,8 +117,9 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
   override def render(graphics : Graphics) : Unit = {
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
     g2d.setStroke(Snake.SNAKE_STROKE)
+    g2d.setColor(Color.RED)
     g2d.fill(snakeHead)
-    g2d.draw(snake)
+    g2d.draw(snakeDrawable)
   }
 }
 
@@ -128,8 +128,7 @@ object Snake{
   /**
    * Panjang gelombang ular / lamda
    */
-  val random = new Random(System.nanoTime())
-  val CURVE_GAP : Int = random.nextInt(100) + 29
+  val CURVE_GAP : Int = 60
   /**
    * Bilangan peng-kali untuk  jarak terdekat titik-titik bezier dari titik seimbang gelombang
    */

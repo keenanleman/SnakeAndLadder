@@ -1,6 +1,6 @@
 package snakeandladder.gameobject
 
-import java.awt.Graphics
+import java.awt.{Shape, Graphics}
 /**
  * Semua benda/objek didalam game merupakan tururan dari kelas ini,
  * semua objek di dalam game harus bisa dirender dan mempunyai posisi awal

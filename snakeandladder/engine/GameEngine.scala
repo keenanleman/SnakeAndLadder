@@ -1,9 +1,11 @@
 package snakeandladder.engine
 
+import java.awt.event.{MouseListener, KeyListener}
 import java.awt.image.BufferStrategy
 import java.awt.{Color, Graphics,Graphics2D, Toolkit,RenderingHints}
+import snakeandladder.gamestate.{GameState, GameStateManager}
 
-import snakeandladder.gameobject.{Player, Board}
+import snakeandladder.gameobject.{GameObject, Dice, Player, Board}
 
 class GameEngine extends Runnable{
   private var mainThread : Thread = null
@@ -11,25 +13,39 @@ class GameEngine extends Runnable{
   private var runningStatus : Boolean = false
   private var bufferStrategy : BufferStrategy = null
   private var graphics : Graphics = null
-
   private var board : Board = null
+  private def isRunning : Boolean = runningStatus
+
+
+  private def initEngine : Unit = {
+    /* inisiasi gameDisplay */
+    gameDisplay = new GameDisplay
+    gameDisplay.getDisplayCanvas.addMouseListener(GameStateManager)
+    gameDisplay.getDisplayCanvas.addKeyListener(GameStateManager)
+  }
 
   /**
    * Ada banyak komponen yang akan di inisialisasi disini
    */
   private def initComponents : Unit = {
-    /* inisiasi gameDisplay */
-    gameDisplay = new GameDisplay
-    /* Bagian ini akan dipindahkan ke GameState*****************/
-      /* inisiasi game board */
-      board = new Board(0,0,10,10)
-    /***********************************************************/
+    val playState : GameState = new GameState
+    board = new Board(0,0,10,10)
+    board.populateSnake(5)
+    board.setDice(new Dice(700,0))
+    board.addPlayer(new Player(board.getTileByNumber(1),board))
+
+    playState.addComponentObject(board)
+    playState.addComponentObject(board.getDice)
+    playState.addComponentObjects(board.getPlayers.asInstanceOf[Array[GameObject]])
+    playState.addComponentObjects(board.getSnakes.asInstanceOf[Array[GameObject]])
+    GameStateManager.addState(playState,"PlayState")
+    GameStateManager.setActiveState("PlayState")
   }
 
   /**
    * Main render
    */
-  private def renderComponents : Unit = {
+  private def runGameState : Unit = {
     bufferStrategy = gameDisplay.getDisplayCanvas.getBufferStrategy
     if(bufferStrategy == null){
       /* Triple buffering */
@@ -45,28 +61,10 @@ class GameEngine extends Runnable{
     /* Clearing screen */
     graphics.clearRect(0,0,GameEngine.WINDOW_WIDTH,GameEngine.WINDOW_HEIGHT)
     /* rendering */
-    mainRender
+    GameStateManager.runState(graphics)
     Toolkit.getDefaultToolkit.sync
     bufferStrategy.show
     graphics.dispose
-  }
-  private def mainRender : Unit = {
-    /* Semua komponen yang harus dirender masuk disini */
-
-    /* Bagian ini akan dipindahkan ke GameState*****************/
-    /* render board */
-    board.render(graphics)
-    /***********************************************************/
-
-  }
-
-  private def updateComponents : Unit = {
-    /* Semua komponen yang mempunyai event masuk disini */
-
-    /* Bagian ini akan dipindahkan ke GameState*****************/
-    board.update()
-    /***********************************************************/
-
   }
 
   private def antialiasing(graphics : Graphics) : Unit = {
@@ -80,7 +78,6 @@ class GameEngine extends Runnable{
   }
 
 
-  def isRunning : Boolean = runningStatus
 
   /**
    * Run game thread
@@ -109,6 +106,7 @@ class GameEngine extends Runnable{
    * Called when thread start,
    */
   override def run : Unit = {
+    initEngine
     initComponents
     var delta : Double = 0
     var currentTime : Long = 0
@@ -120,8 +118,7 @@ class GameEngine extends Runnable{
        delta += (currentTime - lastTime).asInstanceOf[Double] / GameEngine.DEFAULT_UPDATE_PERIOD
        lastTime = currentTime
        if(delta >= 1){
-         renderComponents
-         updateComponents
+         runGameState
          delta -= 1
        }
     }

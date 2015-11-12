@@ -23,6 +23,7 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
   private var currentTile : Int = initialTile.getTileNumber
   private var followSnake : Snake = null
   private var snakeIterator : DynamicLineIterator = null
+  private var diceRolled = false
   /**
    * Posisi tempat player akan dipindahkan
    */
@@ -44,7 +45,12 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    * terjadi saat runtime
    */
   override def update(): Unit = {
-    if(followSnake != null && (playerDrawable.x != x && playerDrawable.y != y)){
+    var tile : Tile = board.getTileByNumber(currentTile)
+    if(tile.isHasSnake && tile.getSnakeHead != null && followSnake == null && currentTile == destinationTile){
+      followSnake = tile.getSnakeHead
+      destinationTile = followSnake.getTo.getTileNumber
+      snakeIterator = new DynamicLineIterator(followSnake.getDrawable)
+    }else if(followSnake != null && (playerDrawable.x != x && playerDrawable.y != y)){
       playerDrawable.x = x
       playerDrawable.y = y
     }else if(playerDrawable.x < x) {
@@ -65,16 +71,8 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    */
   def moveToNextTile : Unit = {
     currentTile += 1
-    var tile : Tile = board.getTileByNumber(currentTile)
-    if(tile.isHasSnake && tile.getSnakeHead != null && followSnake == null){
-      destinationTile = tile.getSnakeHead.getTo.getTileNumber
-      println(destinationTile)
-      followSnake = tile.getSnakeHead
-      snakeIterator = new DynamicLineIterator(followSnake.getDrawable)
-    }else{
-      x = board.getTileByNumber(currentTile + 1).getX + Player.PLAYER_REL_POS_TO_TILE
-      y = board.getTileByNumber(currentTile + 1).getY + Player.PLAYER_REL_POS_TO_TILE
-    }
+    x = board.getTileByNumber(currentTile).getX + Player.PLAYER_REL_POS_TO_TILE
+    y = board.getTileByNumber(currentTile).getY + Player.PLAYER_REL_POS_TO_TILE
   }
 
   /**
@@ -88,9 +86,14 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
     }else{
       x = followSnake.getTo.getX + Player.PLAYER_REL_POS_TO_TILE
       y = followSnake.getTo.getY + Player.PLAYER_REL_POS_TO_TILE
+      playerDrawable.x = x
+      playerDrawable.y = y
+      currentTile = destinationTile
       followSnake = null
     }
   }
+
+  def getCurrentTile : Int = currentTile
 
   /**
    * Memindahkan player ke tile tertentu

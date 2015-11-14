@@ -55,7 +55,7 @@ with MouseEventListener with GameObjectUpdate{
    * Sementara jika assetManager sudah di buat akan dipindahkan
    * Font dari button
    */
-  var buttonFont = Font.createFont(Font.TRUETYPE_FONT,new File("/home/keenan/IdeaProjects/SnakeAndLadder/src/snakeandladder/JosefinSans-SemiBold.ttf"))
+  var buttonFont = Font.createFont(Font.TRUETYPE_FONT,new File("src/snakeandladder/JosefinSans-SemiBold.ttf"))
 
   /**
    * Implementasi kosong dari ButtonAction, jika tombol ingin mempunyai aksi,

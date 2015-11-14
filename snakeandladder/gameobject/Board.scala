@@ -7,6 +7,7 @@ import java.util.ArrayList
 import java.util.Random
 import java.util.Iterator
 
+import snakeandladder.engine.BoardSettings
 import snakeandladder.gameevent.MouseEventListener
 
 /**
@@ -29,11 +30,20 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   /**
    * Array untuk menyimpan object Snake
    */
-  private var snakes : Array[Snake] = null 
+  private var snakes : Array[Snake] = null
 
+  /**
+   * Dadu yang digunakan board
+   */
   private var dice : Dice = null
 
+  /**
+   * List dari pemain
+   */
   private val players : ArrayList[Player] = new ArrayList[Player]
+  /**
+   * Iterator dari List pemain
+   */
   private val playerIterator : Iterator[Player] = players.iterator()
 
 
@@ -51,29 +61,32 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
       for (j <- 0 until numCol) {
         var currentColor : Color = null
         if(numOfTiles % 2 == 1){
-          currentColor = Tile.TILE_COLOR_ODD
+          currentColor = BoardSettings.TILE_COLOR_ODD
         }else{
-          currentColor = Tile.TILE_COLOR_EVEN
+          currentColor = BoardSettings.TILE_COLOR_EVEN
         }
         tiles(i)(j) = new Tile(currentX,currentY,numOfTiles,currentColor)
         tilesRefNum(numOfTiles - 1) = tiles(i)(j)
         numOfTiles -= 1
         if(rightToLeft) {
-          currentX += Tile.TILE_SIZE
+          currentX += BoardSettings.TILE_SIZE
         }else{
-          currentX -= Tile.TILE_SIZE
+          currentX -= BoardSettings.TILE_SIZE
         }
       }
-      currentY += Tile.TILE_SIZE
+      currentY += BoardSettings.TILE_SIZE
       if(rightToLeft){
-        currentX -= Tile.TILE_SIZE
+        currentX -= BoardSettings.TILE_SIZE
       }else{
-        currentX += Tile.TILE_SIZE
+        currentX += BoardSettings.TILE_SIZE
       }
       rightToLeft = !rightToLeft
     }
   }
 
+  /**
+   * Menjalankan pemain pada gilirannya(Masih membutuhkan kelas GameStage)
+   */
   def turnPlayer : Unit = {
     dice.roll
   }
@@ -85,21 +98,42 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
     */
   def getTileByNumber(number : Int) : Tile = tilesRefNum(number - 1)
 
+  /**
+   * Mengembalikan dadu yang digunakan pada board
+   * @return
+   */
   def getDice : Dice = dice
 
+  /**
+   * Mengembalikan array dari semua pemain yang ada pada board
+   * @return array dari pemain
+   */
   def getPlayers : Array[Player] = players.toArray(new Array[Player](players.size()))
 
+  /**
+   * Mengembalikan array dari semua snake yang ada pada board
+   * @return array dari snake
+   */
   def getSnakes : Array[Snake]  = snakes
 
+  /**
+   * Mengeset dadu pada board
+   * @param dice
+   */
   def setDice(dice : Dice) : Unit = {
-    this.dice = new Dice(numRow * Tile.TILE_SIZE,0)
+    this.dice = new Dice(numRow * BoardSettings.TILE_SIZE,0)
   }
+
+  /**
+   * Menambah player kedalam board
+   * @param player
+   */
   def addPlayer(player : Player) : Unit = {
     players.add(player)
   }
 
   /**
-   * Method untuk mempopulasi board dengan tile
+   * Method untuk mempopulasi board dengan snake
    */
   def populateSnake(numOfSnake : Int) : Unit = {
     snakes = new Array[Snake](numOfSnake)

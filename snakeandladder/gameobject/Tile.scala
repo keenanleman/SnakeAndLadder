@@ -3,6 +3,8 @@ package snakeandladder.gameobject
 import java.awt._
 import java.awt.geom.Rectangle2D
 
+import snakeandladder.engine.BoardSettings
+
 /**
  * Representasi dari tile pada board
  * @param initialX posisi awal x
@@ -14,15 +16,15 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
   /**
    * Objek Rengtangle yang akan menjadi tile
    */
-  private val rectangle : Rectangle2D = new Rectangle2D.Double(x, y,Tile.TILE_SIZE,Tile.TILE_SIZE )
+  private val rectangle : Rectangle2D = new Rectangle2D.Double(x, y,BoardSettings.TILE_SIZE,BoardSettings.TILE_SIZE )
   /**
    * Posisi x nomor tile
    */
-  private val titleX : Float = (Tile.TILE_SIZE - 25 + x).asInstanceOf[Float]
+  private val titleX : Float = (BoardSettings.TILE_SIZE - 25 + x).asInstanceOf[Float]
   /**
    * Posisi y nomor tile
    */
-  private val titleY : Float = (Tile.TILE_SIZE - 5 + y).asInstanceOf[Float]
+  private val titleY : Float = (BoardSettings.TILE_SIZE - 5 + y).asInstanceOf[Float]
 
   /**
     * Status tile mengenai kepemilikan snake
@@ -69,21 +71,3 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
   }
 }
 
-object Tile{
-  /**
-   * Ukuran tile
-   */
-  val TILE_SIZE : Int = 64
-  /**
-   * Jumlah warna tile
-   */
-  val TILE_COLOR_NUM = 4
-  /**
-   * Warna tile bernomor ganjil
-   */
-  val TILE_COLOR_ODD = Color.GRAY
-  /**
-   * Warna tile bernomor genap
-   */
-  val TILE_COLOR_EVEN = Color.WHITE
-}

@@ -3,6 +3,7 @@ package snakeandladder.gameobject
 import java.awt._
 import java.awt.geom.{Ellipse2D, Point2D, Path2D}
 
+import snakeandladder.engine.{SnakeSettings, BoardSettings}
 import snakeandladder.utility.{DynamicLineIterator, PointToPointIterator}
 
 /**
@@ -40,7 +41,7 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
   /**
    * titik tengan dari tile
    */
-  private var centerTilePoint : Double = Tile.TILE_SIZE/2
+  private var centerTilePoint : Double = BoardSettings.TILE_SIZE/2
 
   /* Memanggil method untuk membuat snake */
   buildSnake
@@ -69,7 +70,7 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
 
     var iterator : PointToPointIterator  = new PointToPointIterator(new Point2D.Double(x + centerTilePoint ,y + centerTilePoint),
       new Point2D.Double(x1+ centerTilePoint,y1+ centerTilePoint),
-      Snake.CURVE_GAP)
+      SnakeSettings.CURVE_GAP)
 
     var currentX = iterator.getCurrentX
     var currentY = iterator.getCurrentY
@@ -81,17 +82,17 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
     snakeDrawable.moveTo(currentX, currentY)
     while (iterator.hasNext) {
       if(!iterator.isLastIteration) {
-        snakeDrawable.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
-          currentY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
-          nextX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
-          nextY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
+        snakeDrawable.curveTo(currentX + (SnakeSettings.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+          currentY + (SnakeSettings.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
+          nextX + (SnakeSettings.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+          nextY + (SnakeSettings.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
           nextX,
           nextY)
       }else{
-        snakeDrawable.curveTo(currentX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
-          currentY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
-          nextX + (Snake.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
-          nextY + (Snake.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
+        snakeDrawable.curveTo(currentX + (SnakeSettings.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+          currentY + (SnakeSettings.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
+          nextX + (SnakeSettings.BEZIER_POWER * iterator.getYStep * negator * xOsilationPattern),
+          nextY + (SnakeSettings.BEZIER_POWER * iterator.getXStep * negator * yOsilationPattern),
           x1 + centerTilePoint,
           y1 + centerTilePoint)
       }
@@ -102,10 +103,10 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
       nextY = iterator.getCurrentY
       negator *= -1
     }
-    snakeHead = new Ellipse2D.Double(x + centerTilePoint - Snake.SNAKE_HEAD_WIDTH / 2,
-      y + centerTilePoint - Snake.SNAKE_HEAD_HEIGHT / 2,
-      Snake.SNAKE_HEAD_WIDTH,
-      Snake.SNAKE_HEAD_HEIGHT)
+    snakeHead = new Ellipse2D.Double(x + centerTilePoint - SnakeSettings.SNAKE_HEAD_WIDTH / 2,
+      y + centerTilePoint - SnakeSettings.SNAKE_HEAD_HEIGHT / 2,
+      SnakeSettings.SNAKE_HEAD_WIDTH,
+      SnakeSettings.SNAKE_HEAD_HEIGHT)
   }
 
   def getDrawable : Path2D = snakeDrawable
@@ -116,33 +117,10 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
    */
   override def render(graphics : Graphics) : Unit = {
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
-    g2d.setStroke(Snake.SNAKE_STROKE)
+    g2d.setStroke(SnakeSettings.SNAKE_STROKE)
     g2d.setColor(Color.RED)
     g2d.fill(snakeHead)
     g2d.draw(snakeDrawable)
   }
 }
 
-object Snake{
-
-  /**
-   * Panjang gelombang ular / lamda
-   */
-  val CURVE_GAP : Int = 60
-  /**
-   * Bilangan peng-kali untuk  jarak terdekat titik-titik bezier dari titik seimbang gelombang
-   */
-  val BEZIER_POWER : Int = 1
-  /**
-   * Lebar dari garis pembentuk badan ular
-   */
-  val SNAKE_STROKE : Stroke = new BasicStroke(8)
-  /**
-   * Lebar dari kepala ular
-   */
-  val SNAKE_HEAD_WIDTH : Double = 25
-  /**
-   * Tinggi dari kepala ular
-   */
-  val SNAKE_HEAD_HEIGHT : Double = 15
-}

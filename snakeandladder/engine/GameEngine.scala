@@ -3,6 +3,7 @@ package snakeandladder.engine
 import java.awt.event.{MouseListener, KeyListener}
 import java.awt.image.BufferStrategy
 import java.awt.{Color, Graphics,Graphics2D, Toolkit,RenderingHints}
+import snakeandladder.gamecomponent.Button
 import snakeandladder.gamestate.{GameState, GameStateManager}
 
 import snakeandladder.gameobject.{GameObject, Dice, Player, Board}
@@ -22,6 +23,7 @@ class GameEngine extends Runnable{
     gameDisplay = new GameDisplay
     gameDisplay.getDisplayCanvas.addMouseListener(GameStateManager)
     gameDisplay.getDisplayCanvas.addKeyListener(GameStateManager)
+    gameDisplay.getDisplayCanvas.addMouseMotionListener(GameStateManager)
   }
 
   /**
@@ -38,6 +40,7 @@ class GameEngine extends Runnable{
     playState.addComponentObject(board.getDice)
     playState.addComponentObjects(board.getPlayers.asInstanceOf[Array[GameObject]])
     playState.addComponentObjects(board.getSnakes.asInstanceOf[Array[GameObject]])
+    playState.addComponentObject(new Button(650,100,"Click Me",100))
     GameStateManager.addState(playState,"PlayState")
     GameStateManager.setActiveState("PlayState")
   }
@@ -55,11 +58,11 @@ class GameEngine extends Runnable{
     graphics = bufferStrategy.getDrawGraphics
 
     /* Apakah menggunakan antialias */
-    if(GameEngine.USE_ANTIALIAS){
+    if(GameEngineSettings.getAntialiasSettings){
       antialiasing(graphics)
     }
     /* Clearing screen */
-    graphics.clearRect(0,0,GameEngine.WINDOW_WIDTH,GameEngine.WINDOW_HEIGHT)
+    graphics.clearRect(0,0,GameDisplaySettings.WINDOW_WIDTH,GameDisplaySettings.WINDOW_HEIGHT)
     /* rendering */
     GameStateManager.runState(graphics)
     Toolkit.getDefaultToolkit.sync
@@ -115,7 +118,7 @@ class GameEngine extends Runnable{
     /* Game loop */
     while(isRunning){
        currentTime = System.nanoTime()
-       delta += (currentTime - lastTime).asInstanceOf[Double] / GameEngine.DEFAULT_UPDATE_PERIOD
+       delta += (currentTime - lastTime).asInstanceOf[Double] / GameEngineSettings.getDefaultUpdatePeriod
        lastTime = currentTime
        if(delta >= 1){
          runGameState
@@ -124,14 +127,5 @@ class GameEngine extends Runnable{
     }
   }
 
-}
-/* Statics */
-object GameEngine {
-  val TITLE : String = "Snake and Ladder"
-  val WINDOW_WIDTH : Int = 800
-  val WINDOW_HEIGHT : Int = 800
-  val DEFAULT_FPS : Int = 60
-  val DEFAULT_UPDATE_PERIOD : Double = 1000000000 / GameEngine.DEFAULT_FPS
-  var USE_ANTIALIAS : Boolean = true
 }
 

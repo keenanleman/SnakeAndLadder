@@ -3,6 +3,7 @@ package snakeandladder.gameobject
 import java.awt.{Color, Graphics2D, Graphics}
 import java.awt.geom.RoundRectangle2D
 
+import snakeandladder.engine.PlayerSettings
 import snakeandladder.utility.DynamicLineIterator
 
 /**
@@ -11,12 +12,12 @@ import snakeandladder.utility.DynamicLineIterator
  * @param board board tempat player di mainkan
  */
 class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.getX, initialTile.getY) with GameObjectUpdate{
-  x += Player.PLAYER_REL_POS_TO_TILE
-  y += Player.PLAYER_REL_POS_TO_TILE
+  x += PlayerSettings.PLAYER_REL_POS_TO_TILE
+  y += PlayerSettings.PLAYER_REL_POS_TO_TILE
   /**
    * Objek yang akan dirender pada board sebagai representasi dari player
    */
-  private var playerDrawable : RoundRectangle2D.Double = new RoundRectangle2D.Double(x,y,Player.PLAYER_SIZE,Player.PLAYER_SIZE,20,20)
+  private var playerDrawable : RoundRectangle2D.Double = new RoundRectangle2D.Double(x,y,PlayerSettings.PLAYER_SIZE,PlayerSettings.PLAYER_SIZE,20,20)
   /**
    * Posisi tile tempat player di tempatkan
    */
@@ -54,11 +55,11 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
       playerDrawable.x = x
       playerDrawable.y = y
     }else if(playerDrawable.x < x) {
-      playerDrawable.x += Player.MOVE_SPEED
+      playerDrawable.x += PlayerSettings.MOVE_SPEED
     }else if(playerDrawable.x > x) {
-      playerDrawable.x -= Player.MOVE_SPEED
+      playerDrawable.x -= PlayerSettings.MOVE_SPEED
     }else if(playerDrawable.y > y) {
-      playerDrawable.y -= Player.MOVE_SPEED
+      playerDrawable.y -= PlayerSettings.MOVE_SPEED
     }else if(followSnake != null) {
       moveToFollowSnake
     }else if(destinationTile > currentTile){
@@ -71,8 +72,8 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
    */
   def moveToNextTile : Unit = {
     currentTile += 1
-    x = board.getTileByNumber(currentTile).getX + Player.PLAYER_REL_POS_TO_TILE
-    y = board.getTileByNumber(currentTile).getY + Player.PLAYER_REL_POS_TO_TILE
+    x = board.getTileByNumber(currentTile).getX + PlayerSettings.PLAYER_REL_POS_TO_TILE
+    y = board.getTileByNumber(currentTile).getY + PlayerSettings.PLAYER_REL_POS_TO_TILE
   }
 
   /**
@@ -80,12 +81,12 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
     */
   def moveToFollowSnake : Unit = {
     if(!snakeIterator.hasNext){
-      x = snakeIterator.getPoint.getX - Player.PLAYER_REL_POS_TO_TILE
-      y = snakeIterator.getPoint.getY - Player.PLAYER_REL_POS_TO_TILE
+      x = snakeIterator.getPoint.getX - PlayerSettings.PLAYER_REL_POS_TO_TILE
+      y = snakeIterator.getPoint.getY - PlayerSettings.PLAYER_REL_POS_TO_TILE
       snakeIterator.next
     }else{
-      x = followSnake.getTo.getX + Player.PLAYER_REL_POS_TO_TILE
-      y = followSnake.getTo.getY + Player.PLAYER_REL_POS_TO_TILE
+      x = followSnake.getTo.getX + PlayerSettings.PLAYER_REL_POS_TO_TILE
+      y = followSnake.getTo.getY + PlayerSettings.PLAYER_REL_POS_TO_TILE
       playerDrawable.x = x
       playerDrawable.y = y
       currentTile = destinationTile
@@ -104,11 +105,3 @@ class Player(initialTile : Tile, board : Board) extends GameObject(initialTile.g
   }
 }
 
-object Player{
-  /* Ukuran player pada board*/
-  val PLAYER_SIZE : Double = 32
-  /* Kecepatan gerakan player pada board */
-  val MOVE_SPEED : Double = 4
-  /* Posisi player relatif terhadap tile*/
-  val PLAYER_REL_POS_TO_TILE : Double = (Tile.TILE_SIZE - Player.PLAYER_SIZE) / 4
-}

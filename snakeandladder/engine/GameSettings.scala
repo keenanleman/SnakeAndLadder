@@ -24,18 +24,15 @@ object GameEngineSettings{
 object GameDisplaySettings{
   val TITLE : String = "Snake and Ladder"
   val WINDOW_WIDTH : Int = 800
-  val WINDOW_HEIGHT : Int = 800
+  val WINDOW_HEIGHT : Int = 600
 }
 
 object DiceSettings{
   /**
    * Ukuran dadu
    */
-  val DICE_SIZE : Double = 40
-  /**
-   * Menentukan posisi dadu
-   */
-  val DICE_POSTITION : Double = (BoardSettings.TILE_SIZE - PlayerSettings.PLAYER_SIZE) / 2
+  val DICE_SIZE : Double = 150
+
   /**
    * Durasi animasi perputaran dadu
    */
@@ -54,7 +51,7 @@ object BoardSettings{
     /**
      * Ukuran tile
      */
-    val TILE_SIZE : Int = 64
+    val TILE_SIZE : Int = 52
     /**
      * Jumlah warna tile
      */
@@ -62,18 +59,18 @@ object BoardSettings{
     /**
      * Warna tile bernomor ganjil
      */
-    val TILE_COLOR_ODD = Color.GRAY
+    val TILE_COLOR_ODD = Color.YELLOW
     /**
      * Warna tile bernomor genap
      */
-    val TILE_COLOR_EVEN = Color.WHITE
+    val TILE_COLOR_EVEN = Color.BLACK
 }
 
 object SnakeSettings{
   /**
    * Panjang gelombang ular / lamda
    */
-  val CURVE_GAP : Int = 60
+  val CURVE_GAP : Int = 50
   /**
    * Bilangan pengali untuk  jarak terdekat titik-titik bezier dari titik seimbang gelombang
    */
@@ -81,17 +78,35 @@ object SnakeSettings{
   /**
    * Lebar dari garis pembentuk badan ular
    */
-  val SNAKE_STROKE : Stroke = new BasicStroke(8)
+  val SNAKE_STROKE : Stroke = new BasicStroke(5)
   /**
    * Lebar dari kepala ular
    */
-  val SNAKE_HEAD_WIDTH : Double = 25
-  /**
-   * Tinggi dari kepala ular
-   */
-  val SNAKE_HEAD_HEIGHT : Double = 15
+  val SNAKE_HEAD_SIZE : Double = 12
 }
 
 object ButtonSettings{
   val BUTTON_HEIGHT : Double = 30
+  val BIG_BUTTON_HEIGHT : Double = 50
+  val SMALL_BUTTON_HEIGHT : Double = 20
+  val CHECKBOX_BUTTON_SIZE : Double = 20
+}
+
+object ResourcePath{
+  val BACKGROUND_KAYU_PATH : String = "src/resources/wood_texture.jpg"
+  val DEFAULT_FONT_PATH : String =  "src/resources/JosefinSans-SemiBold.ttf"
+}
+
+object LabelSettings{
+  val LABEL_HEIGHT : Double = 30
+}
+
+object GameRulesSettings{
+  val MAX_PLAYER = 8
+  val MAX_LADDER = 10
+  val MAX_SNAKE = 10
+
+  val MIN_PLAYER = 2
+  val MIN_LADDER = 4
+  val MIN_SNAKE = 4
 }

@@ -2,6 +2,8 @@ package snakeandladder.engine
 
 import java.awt.{BasicStroke, Stroke, Color}
 
+import snakeandladder.utility.UniversalPath
+
 object GameEngineSettings{
   /* Mutable */
   private var USE_ANTIALIAS : Boolean = true
@@ -32,11 +34,13 @@ object DiceSettings{
    * Ukuran dadu
    */
   val DICE_SIZE : Double = 150
-
   /**
    * Durasi animasi perputaran dadu
    */
   val ROLL_TIME_IN_SECONDS : Int = 2 * GameEngineSettings.getDefaultFPS
+
+  val DICE_NAME_FORMAT = "Dice%d"
+
 }
 
 object PlayerSettings{
@@ -93,8 +97,11 @@ object ButtonSettings{
 }
 
 object ResourcePath{
-  val BACKGROUND_KAYU_PATH : String = "src/resources/wood_texture.jpg"
-  val DEFAULT_FONT_PATH : String =  "src/resources/JosefinSans-SemiBold.ttf"
+  val BACKGROUND_WOOD_PATH : String = new UniversalPath("src/resources/wood_texture.jpg").toString
+  println(BACKGROUND_WOOD_PATH)
+  val DEFAULT_FONT_PATH : String =  new UniversalPath("src/resources/JosefinSans-SemiBold.ttf").toString
+  val DICE_IMAGES_PATH_FORMAT : String = new UniversalPath("src/resources/Dice-0%d.png").toString
+  val SNAKE_TEXTURE_PATH : String = new UniversalPath("src/resources/snake_texture.png").toString
 }
 
 object LabelSettings{

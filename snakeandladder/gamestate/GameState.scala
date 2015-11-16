@@ -9,8 +9,9 @@ import snakeandladder.gameobject.{GameObjectUpdate, GameObject}
 
 /**
  * Kelas yang mengatur bagaimana sebuah state dalam game di render, serta mengatur semua event yang terjadi dalam state
+ * @param stateTitle Judul dari state dan juga menjadi nama dari state
  */
-class GameState extends GameEventBroadcaster with GameEventListener {
+abstract class GameState(stateTitle : String) extends GameEventBroadcaster with GameEventListener {
   /**
    * Menyimpan semua objek yang dapat dirender
    */
@@ -19,6 +20,22 @@ class GameState extends GameEventBroadcaster with GameEventListener {
    * Menyimpan semua objek yang dapat diupdate
    */
   private val updatableObjects : ArrayList[GameObjectUpdate] = new ArrayList[GameObjectUpdate]
+
+  /*
+   * Memanggil method init untuk menginisiasi GameState
+   */
+  init
+
+  /**
+   * Method abstract untuk inisiasi GameState
+   */
+  def init : Unit
+
+  /**
+   * Method getter untuk stateTitle
+   * @return
+   */
+  def getTitle : String = stateTitle
 
   /**
    * Merender semua objek yang dapat di render

@@ -2,6 +2,7 @@ package snakeandladder.gameobject
 
 import java.awt._
 import java.awt.geom.{RoundRectangle2D}
+import java.awt.image.BufferedImage
 import java.util.Random
 
 import snakeandladder.engine.{GameDisplaySettings, DiceSettings}
@@ -9,6 +10,13 @@ import snakeandladder.utility.AssetManager
 
 class Dice(initialX : Double, initialY : Double)
   extends GameObject(initialX, initialY) with GameObjectUpdate{
+
+  private var diceImages : Array[BufferedImage] = new Array[BufferedImage](7)
+
+  for(i <- 1 to 6){
+    var diceName : String = String.format(DiceSettings.DICE_NAME_FORMAT,i.asInstanceOf[Object])
+    diceImages(i) = AssetManager.getImage(diceName)
+  }
 
   private var diceColor : Color = AssetManager.getColor("DiceColor")
   /**
@@ -106,8 +114,7 @@ class Dice(initialX : Double, initialY : Double)
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
     g2d.setColor(diceColor)
     g2d.fill(diceDrawable)
-    g2d.setFont(new Font("default", Font.BOLD, 20))
-    g2d.drawString(currentValue.toString,(diceDrawable.x - 7 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float],(diceDrawable.y + 5 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float])
+    g2d.drawImage(diceImages(currentValue),diceDrawable.x.toInt, diceDrawable.y.toInt,150,150,null)
   }
 }
 

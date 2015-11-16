@@ -1,10 +1,10 @@
 package snakeandladder.gameobject
 
 import java.awt._
-import java.awt.geom.{Ellipse2D, Point2D, Path2D}
+import java.awt.geom.{Rectangle2D, Ellipse2D, Point2D, Path2D}
 
 import snakeandladder.engine.{SnakeSettings, BoardSettings}
-import snakeandladder.utility.{DynamicLineIterator, PointToPointIterator}
+import snakeandladder.utility.{AssetManager, DynamicLineIterator, PointToPointIterator}
 
 /**
  * Representasi dari ular pada board
@@ -30,6 +30,10 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
    * Shape/drawable yang menjadi kepala ular
    */
   private var snakeHead : Shape = null
+  private var snakeTexturePaint : TexturePaint = new TexturePaint(
+    AssetManager.getImage("SnakeTexture"),
+    new Rectangle2D.Double(0,0,10,10)
+  )
   /**
    * Pattern osilasi x
    */
@@ -118,7 +122,7 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
   override def render(graphics : Graphics) : Unit = {
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
     g2d.setStroke(SnakeSettings.SNAKE_STROKE)
-    g2d.setColor(Color.RED)
+    g2d.setPaint(snakeTexturePaint)
     g2d.fill(snakeHead)
     g2d.draw(snakeDrawable)
   }

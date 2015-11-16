@@ -7,7 +7,6 @@ import javax.imageio.ImageIO
 
 /**
  * Kelas yang berfungsi untuk memparse sebuah gambar dari file.
- * Created by ADMIN6 on 11/16/2015.
  */
 class ImageManager extends AssetManager {
   /**

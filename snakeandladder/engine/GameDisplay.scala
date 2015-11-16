@@ -1,7 +1,6 @@
 package snakeandladder.engine
 
 import java.awt.{Canvas, Dimension}
-import java.util.EventListener
 import javax.swing.JFrame
 
 /**
@@ -28,10 +27,6 @@ class GameDisplay(){
   displayFrame.add(displayCanvas)
   displayFrame.setVisible(true)
   displayFrame.pack()
-
-  def registerDirectEvent(eventListener : EventListener): Unit ={
-
-  }
 
   def getDisplayCanvas : Canvas = displayCanvas
 }

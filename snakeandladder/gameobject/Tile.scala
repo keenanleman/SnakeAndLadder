@@ -4,6 +4,7 @@ import java.awt._
 import java.awt.geom.Rectangle2D
 
 import snakeandladder.engine.BoardSettings
+import snakeandladder.utility.AssetManager
 
 /**
  * Representasi dari tile pada board
@@ -25,6 +26,16 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
    * Posisi y nomor tile
    */
   private val titleY : Float = (BoardSettings.TILE_SIZE - 5 + y).asInstanceOf[Float]
+
+  private var titleColor : Color = _
+
+  if(tileNumber % 2 == 0){
+    titleColor = AssetManager.getColor("TileColorOdd")
+  }else{
+    titleColor = AssetManager.getColor("TileColorEven")
+  }
+
+  private val titleFont : Font = AssetManager.getFont("DefaultFont")
 
   /**
     * Status tile mengenai kepemilikan snake
@@ -74,7 +85,8 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
     var graphics2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
     graphics2d.setColor(color)
     graphics2d.fill(rectangle)
-    graphics2d.setColor(Color.BLACK)
+    graphics2d.setColor(titleColor)
+    graphics2d.setFont(titleFont)
     graphics2d.drawString(tileNumber.toString,titleX,titleY)
   }
 }

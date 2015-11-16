@@ -103,10 +103,10 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
       nextY = iterator.getCurrentY
       negator *= -1
     }
-    snakeHead = new Ellipse2D.Double(x + centerTilePoint - SnakeSettings.SNAKE_HEAD_WIDTH / 2,
-      y + centerTilePoint - SnakeSettings.SNAKE_HEAD_HEIGHT / 2,
-      SnakeSettings.SNAKE_HEAD_WIDTH,
-      SnakeSettings.SNAKE_HEAD_HEIGHT)
+    snakeHead = new Ellipse2D.Double(x + centerTilePoint - SnakeSettings.SNAKE_HEAD_SIZE / 2,
+      y + centerTilePoint - SnakeSettings.SNAKE_HEAD_SIZE / 2,
+      SnakeSettings.SNAKE_HEAD_SIZE,
+      SnakeSettings.SNAKE_HEAD_SIZE)
   }
 
   def getDrawable : Path2D = snakeDrawable

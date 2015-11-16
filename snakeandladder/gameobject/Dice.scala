@@ -5,11 +5,12 @@ import java.awt.geom.{RoundRectangle2D}
 import java.util.Random
 
 import snakeandladder.engine.{GameDisplaySettings, DiceSettings}
+import snakeandladder.utility.AssetManager
 
-class Dice(initialX : Double, initialY : Double) extends GameObject(initialX, initialY) with GameObjectUpdate{
-  x+= DiceSettings.DICE_POSTITION
-  y+= DiceSettings.DICE_POSTITION
+class Dice(initialX : Double, initialY : Double)
+  extends GameObject(initialX, initialY) with GameObjectUpdate{
 
+  private var diceColor : Color = AssetManager.getColor("DiceColor")
   /**
     * nilai pada mata dadu
     */
@@ -103,11 +104,10 @@ class Dice(initialX : Double, initialY : Double) extends GameObject(initialX, in
     */
   override def render(graphics: Graphics): Unit ={
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
-    var diceColor = new Color(Color.RED.getRed, Color.RED.getGreen, Color.RED.getBlue, 200)
-    g2d.setFont(new Font("default", Font.BOLD, 20))
-    g2d.drawString(currentValue.toString,(diceDrawable.x - 7 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float],(diceDrawable.y + 5 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float])
     g2d.setColor(diceColor)
     g2d.fill(diceDrawable)
+    g2d.setFont(new Font("default", Font.BOLD, 20))
+    g2d.drawString(currentValue.toString,(diceDrawable.x - 7 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float],(diceDrawable.y + 5 + DiceSettings.DICE_SIZE/2).asInstanceOf[Float])
   }
 }
 

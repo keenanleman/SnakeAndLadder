@@ -22,10 +22,9 @@ object GameStateManager extends KeyListener with MouseListener with MouseMotionL
   /**
    * Mengambah state kedalam list
    * @param gameState state yang akan ditambahkan
-   * @param stateName nama dari state
    */
-  def addState(gameState : GameState, stateName : String): Unit ={
-    stateList.put(stateName,gameState)
+  def addState(gameState : GameState): Unit ={
+    stateList.put(gameState.getTitle,gameState)
   }
 
   /**

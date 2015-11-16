@@ -9,6 +9,7 @@ import java.util.Iterator
 
 import snakeandladder.engine.BoardSettings
 import snakeandladder.gameevent.MouseEventListener
+import snakeandladder.utility.AssetManager
 
 /**
  * Kelas board, representasi dari papan permainan, kelas ini mepopulasi tile sesuai dengan masukan
@@ -23,6 +24,12 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   /* multidimensional array dari tile */
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)
+
+  private var tileColorOdd : Color = AssetManager.getColor("TileColorOdd")
+
+  private var tileColorEven : Color = AssetManager.getColor("TileColorEven")
+
+  private var boardBackgroundColor : Color = AssetManager.getColor("BoardBackgroundColor")
 
   private var boardBackground : RoundRectangle2D.Double = null
   /**
@@ -74,9 +81,9 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
       for (j <- 0 until numCol) {
         var currentColor : Color = null
         if(numOfTiles % 2 == 1){
-          currentColor = BoardSettings.TILE_COLOR_ODD
+          currentColor = tileColorOdd
         }else{
-          currentColor = BoardSettings.TILE_COLOR_EVEN
+          currentColor = tileColorEven
         }
         tiles(i)(j) = new Tile(currentX,currentY,numOfTiles,currentColor)
         tilesRefNum(numOfTiles - 1) = tiles(i)(j)
@@ -212,7 +219,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   override def render(graphics: Graphics) : Unit = {
     /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
 
-    graphics.setColor(new Color(184,115,51,180))
+    graphics.setColor(boardBackgroundColor)
     graphics.asInstanceOf[Graphics2D].fill(boardBackground)
     for (i <- 0 until numRow) {
       for (j <- 0 until numCol) {

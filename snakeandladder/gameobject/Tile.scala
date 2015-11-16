@@ -31,6 +31,8 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
     */
   private var hasSnake : Boolean = false
 
+  private var hasLadder : Boolean = false
+
   private var snakeHead : Snake = null
   def setSnakeHead(snakeHead : Snake): Unit ={
     this.snakeHead = snakeHead
@@ -56,6 +58,12 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
    */
   def gotSnake : Unit = {
     hasSnake = true
+  }
+
+  def isHasLadder : Boolean = hasLadder
+
+  def gotLadder : Unit = {
+    hasLadder = true
   }
 
   /**

@@ -38,7 +38,7 @@ class GameEngine extends Runnable{
    */
   private def initComponents : Unit = {
     var backgroundBlurPrimary = Color.WHITE
-    AssetManager.registerAsset("BackgroundWood",ImageIO.read(new File(ResourcePath.BACKGROUND_KAYU_PATH)))
+    AssetManager.registerAsset("BackgroundWood",ImageIO.read(new File(ResourcePath.BACKGROUND_WOOD_PATH)))
     AssetManager.registerAsset("BackgroundBlur",new Color(
       backgroundBlurPrimary.getRed,
       backgroundBlurPrimary.getGreen,
@@ -46,9 +46,17 @@ class GameEngine extends Runnable{
       120
     ))
 
+    AssetManager.registerAsset("SnakeTexture",ImageIO.read(new File(ResourcePath.SNAKE_TEXTURE_PATH)))
+
     var defaultFont : Font = Font.createFont(Font.TRUETYPE_FONT,new File(ResourcePath.DEFAULT_FONT_PATH))
     AssetManager.registerAsset("DefaultFont",defaultFont.deriveFont(Font.PLAIN,15),
       graphics.getFontMetrics(defaultFont.deriveFont(Font.PLAIN,15)))
+
+    AssetManager.registerAsset("BoardBackgroundColor",new Color(184,115,51,180))
+
+    AssetManager.registerAsset("TileColorOdd",Color.YELLOW)
+
+    AssetManager.registerAsset("TileColorEven",Color.BLACK)
 
     AssetManager.registerAsset("PrimaryShadowColor",new Color(Color.black.getRed,Color.black.getGreen,Color.black.getBlue,50))
     AssetManager.registerAsset("SecondaryShadowColor",new Color(Color.blue.getRed,Color.blue.getGreen,Color.blue.getBlue,100))
@@ -70,6 +78,12 @@ class GameEngine extends Runnable{
     AssetManager.registerAsset("CheckboxUnCheckedColor", Color.WHITE)
 
     AssetManager.registerAsset("PanelColor",new Color(184,115,51,180))
+
+    for(i <- 1 to 6){
+      var diceName : String = String.format(DiceSettings.DICE_NAME_FORMAT.toString,i.asInstanceOf[Object])
+      var dicePath : String = String.format(ResourcePath.DICE_IMAGES_PATH_FORMAT,i.asInstanceOf[Object])
+      AssetManager.registerAsset(diceName,ImageIO.read(new File(dicePath)))
+    }
 
     var DicePrimaryColor = Color.YELLOW
     AssetManager.registerAsset("DiceColor",new Color(

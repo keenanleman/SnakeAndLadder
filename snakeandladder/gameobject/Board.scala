@@ -1,8 +1,8 @@
 package snakeandladder.gameobject
 
 import java.awt.event.MouseEvent
-import java.awt.geom.Point2D
-import java.awt.{Shape, Color, Graphics}
+import java.awt.geom.{RoundRectangle2D, Point2D}
+import java.awt.{Graphics2D, Shape, Color, Graphics}
 import java.util.ArrayList
 import java.util.Random
 import java.util.Iterator
@@ -18,10 +18,13 @@ import snakeandladder.gameevent.MouseEventListener
  * @param numRow jumlah baris tile dalam board
  * @param numCol jumlah kolom tile dalam board
  */
-class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) extends GameObject(initialX,initialY) with GameObjectUpdate with MouseEventListener{
+class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
+  extends GameObject(initialX,initialY) with GameObjectUpdate with MouseEventListener{
   /* multidimensional array dari tile */
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)
+
+  private var boardBackground : RoundRectangle2D.Double = null
   /**
    * Random generator
    */
@@ -31,6 +34,11 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
    * Array untuk menyimpan object Snake
    */
   private var snakes : Array[Snake] = null
+
+  //private var ladders : Array[Ladder] = null
+
+  private var fullWidth : Double = 0
+  private var fullHeight : Double = 0
 
   /**
    * Dadu yang digunakan board
@@ -55,6 +63,11 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   private def initBoard : Unit = {
     var currentX = x
     var currentY = y
+    var borderX = x - 16
+    var borderY = y - 16
+    fullWidth = (numCol * BoardSettings.TILE_SIZE) + 32
+    fullHeight = (numRow * BoardSettings.TILE_SIZE) + 32
+    boardBackground = new RoundRectangle2D.Double(borderX,borderY,fullWidth,fullHeight,20,20)
     var numOfTiles = numRow * numCol
     var rightToLeft : Boolean = true
     for (i <- 0 until numRow) {
@@ -91,6 +104,10 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
     dice.roll
   }
 
+  def getHeight : Double = fullHeight
+
+  def getWidth : Double = fullHeight
+
   /**
     * Mengembalikan tile berdasarkan nomor tile
     * @param number nomor tile
@@ -116,12 +133,15 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
    */
   def getSnakes : Array[Snake]  = snakes
 
+
+  //def getLadders : Array[Ladder] = ladders
+
   /**
    * Mengeset dadu pada board
    * @param dice
    */
   def setDice(dice : Dice) : Unit = {
-    this.dice = new Dice(numRow * BoardSettings.TILE_SIZE,0)
+    this.dice = dice
   }
 
   /**
@@ -160,11 +180,40 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int) ex
   }
 
   /**
+   * Method untuk mempopulasi board dengan snake
+   *
+  def populateLadder(numOfLadder : Int) : Unit = {
+    ladders = new Array[Ladder](numOfLadder)
+    var from : Int = 0
+    var to : Int = 0
+    var maxIndex = (numRow * numCol) + 1
+    for(i <- 0 until numOfLadder){
+      from = 1 + random.nextInt(maxIndex - 1)
+      while(getTileByNumber(from).isHasSnake){
+        from = 1 + random.nextInt(maxIndex - 1)
+      }
+      var fromTile : Tile = getTileByNumber(from)
+      fromTile.gotLadder
+
+      to = 1 + random.nextInt(maxIndex - 1)
+      while(to <= from || getTileByNumber(to).isHasSnake){
+        to = 1 + random.nextInt(maxIndex - 1)
+      }
+      var toTile : Tile = getTileByNumber(to)
+      toTile.gotLadder
+      ladders(i) = new Ladder(fromTile, toTile)
+    }
+  }*/
+
+  /**
    * Method render dari board, merender tile-tile yang dibutuhkan board
    * @param graphics graphics dari canvas pada kelas GameDisplay
    */
   override def render(graphics: Graphics) : Unit = {
     /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
+
+    graphics.setColor(new Color(184,115,51,180))
+    graphics.asInstanceOf[Graphics2D].fill(boardBackground)
     for (i <- 0 until numRow) {
       for (j <- 0 until numCol) {
         tiles(i)(j).render(graphics)

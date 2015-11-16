@@ -1,31 +1,65 @@
 package snakeandladder.utility
 
+import java.awt.{FontMetrics, Font, Color}
+import java.awt.image.BufferedImage
 import java.util.HashMap
 
 /**
- * Kelas abstrak untuk melakukan penarikan terhadap objek yang
+ * Objek untuk melakukan penarikan terhadap objek yang
  * sudah tersedia dalam bentuk file.
  *
  * Created by ADMIN6 on 11/16/2015.
  */
-class AssetManager {
+object AssetManager {
   /**
     * Merupakan tempat melakukan "mapping" dari nama dengan objek yang
     * ingin dijadikan aset.
     */
-  private val assets : HashMap[String, Object] = new HashMap
+  private val colorAssets : HashMap[String, Color] = new HashMap
+  private val imageAssets : HashMap[String, BufferedImage] = new HashMap
+  private val fontAssets : HashMap[String, Font] = new HashMap
+  private val fontMetricAssets : HashMap[String, FontMetrics] = new HashMap
 
   /**
     * Melakukan penambahan sebuah aset ke dalam manager ini.
-    * @param registerName nama yang ingin dijadikan pedoman untuk objek {@code obj}.
-    * @param obj objek konkrit yang ingin dipanggil melalui {@code registerName}.
-    * @return {@code true} bila manager berhasil menambahkan objek tersebut,
-    *         {@code false} sebaliknya (contoh: bila objek telah ada dalam manager).
+    * @param registerName nama yang ingin dijadikan pedoman untuk objek {obj}.
+    * @param color objek konkrit yang ingin dipanggil melalui {registerName}.
+    * @return {true} bila manager berhasil menambahkan objek tersebut,
+    *         {false} sebaliknya (contoh: bila objek telah ada dalam manager).
     */
-  def registerAsset(registerName : String, obj : Object): Boolean = {
-    if (assets.containsKey(registerName))
+  def registerAsset(registerName : String, color : Color): Boolean = {
+    if (colorAssets.containsKey(registerName))
       return false
-    assets.put(registerName, obj)
+    colorAssets.put(registerName, color)
+    return true
+  }
+
+  /**
+    * Melakukan penambahan sebuah aset ke dalam manager ini.
+    * @param registerName nama yang ingin dijadikan pedoman untuk objek {obj}.
+    * @param font objek konkrit yang ingin dipanggil melalui {registerName}.
+    * @return {true} bila manager berhasil menambahkan objek tersebut,
+    *         {false} sebaliknya (contoh: bila objek telah ada dalam manager).
+    */
+  def registerAsset(registerName : String, font : Font,fontMetrics : FontMetrics): Boolean = {
+    if (fontAssets.containsKey(registerName))
+      return false
+    fontAssets.put(registerName, font)
+    fontMetricAssets.put(registerName, fontMetrics)
+    return true
+  }
+
+  /**
+    * Melakukan penambahan sebuah aset ke dalam manager ini.
+    * @param registerName nama yang ingin dijadikan pedoman untuk objek {obj}.
+    * @param image objek konkrit yang ingin dipanggil melalui {registerName}.
+    * @return {true} bila manager berhasil menambahkan objek tersebut,
+    *         {false} sebaliknya (contoh: bila objek telah ada dalam manager).
+    */
+  def registerAsset(registerName : String, image : BufferedImage): Boolean = {
+    if (imageAssets.containsKey(registerName))
+      return false
+    imageAssets.put(registerName, image)
     return true
   }
 
@@ -33,37 +67,51 @@ class AssetManager {
     * Fungsi ini bertugas untuk mengembalikan objek yang ditampung dengan alias
     * yang diminta.
     * @param registerName alias dari objek yang ingin diambil.
-    * @return objek yang ditampung dengan nama {@code registerName}. {@code null} dikembalikan
+    * @return objek yang ditampung dengan nama {registerName}. {null} dikembalikan
     *         bila objek tidak ada.
     */
-  def getAsset(registerName : String): Object = {
-    if (!assets.containsKey(registerName))
+  def getColor(registerName : String): Color = {
+    if (!colorAssets.containsKey(registerName))
       return null
-    return assets.get(registerName)
+    return colorAssets.get(registerName)
   }
 
   /**
-    * Merubah aset yang sudah ada di dalam aset manager ini.
-    * @param registerName nama dari objek yang ingin dirubah isinya.
-    * @param obj objek baru pengganti objek lama dengan nama {@code registerName}
-    * @return {@code true} bila perubahan berhasil dilakukan.
-    *         {@code false} jika gagal.
+    * Fungsi ini bertugas untuk mengembalikan objek yang ditampung dengan alias
+    * yang diminta.
+    * @param registerName alias dari objek yang ingin diambil.
+    * @return objek yang ditampung dengan nama {registerName}. {null} dikembalikan
+    *         bila objek tidak ada.
     */
-  def modifyAsset(registerName : String, obj : Object): Boolean = {
-    if (!assets.containsKey(registerName))
-      return false
-    assets.remove(registerName)
-    assets.put(registerName, obj)
-    return true
+  def getFont(registerName : String): Font = {
+    if (!fontAssets.containsKey(registerName))
+      return null
+    return fontAssets.get(registerName)
   }
 
   /**
-    * Menghilangkan aset dengan nama tertentu dari manager ini.
-    * @param registerName nama register dari objek yang ingin dihilangkan dari manager ini.
+    * Fungsi ini bertugas untuk mengembalikan objek yang ditampung dengan alias
+    * yang diminta.
+    * @param registerName alias dari objek yang ingin diambil.
+    * @return objek yang ditampung dengan nama {registerName}. {null} dikembalikan
+    *         bila objek tidak ada.
     */
-  def removeAsset(registerName : String) {
-    if (!assets.containsKey(registerName))
-      return
-    assets.remove(registerName)
+  def getFontMetrics(registerName : String): FontMetrics = {
+    if (!fontMetricAssets.containsKey(registerName))
+      return null
+    return fontMetricAssets.get(registerName)
+  }
+
+  /**
+    * Fungsi ini bertugas untuk mengembalikan objek yang ditampung dengan alias
+    * yang diminta.
+    * @param registerName alias dari objek yang ingin diambil.
+    * @return objek yang ditampung dengan nama {registerName}. {null} dikembalikan
+    *         bila objek tidak ada.
+    */
+  def getImage(registerName : String): BufferedImage = {
+    if (!imageAssets.containsKey(registerName))
+      return null
+    return imageAssets.get(registerName)
   }
 }

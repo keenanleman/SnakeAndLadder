@@ -33,11 +33,11 @@ class PointToPointIterator(from : Point2D, to : Point2D, step : Double){
   /**
    * Nilai absolut jarak x sebelum melangkah dan setelah melangkah
    */
-  private val singleDeltaX = (xDelta / numStep).floor
+  private val singleDeltaX = (xDelta / numStep).ceil
   /**
    * Nilai absolut jarak y sebelum melangkah dan setelah melangkah
    */
-  private val singleDeltaY = (yDelta / numStep).floor
+  private val singleDeltaY = (yDelta / numStep).ceil
 
   /**
    * Nilai absolut besar langkah x berdasarkan gradien garis
@@ -127,7 +127,7 @@ class PointToPointIterator(from : Point2D, to : Point2D, step : Double){
    * @return ada tidaknya langkah selanjutnya
    */
   def next : Boolean = {
-    if(!hasNext){
+    if(!hasNext) {
       return false
     }else{
       xCur += (xStep * xIncrementDirection)
@@ -139,7 +139,7 @@ class PointToPointIterator(from : Point2D, to : Point2D, step : Double){
 
   /**
    * Mengembalikan nilai absolut besar langkah x berdasarkan gradien garis
-   * @return
+   * @return jumlah step x
    */
   def getXStep : Double = {
     return xStep
@@ -147,7 +147,7 @@ class PointToPointIterator(from : Point2D, to : Point2D, step : Double){
 
   /**
    * Mengembalikan nilai absolut besar langkah y berdasarkan gradien garis
-   * @return
+   * @return jumlah step y
    */
   def getYStep : Double = {
     return yStep

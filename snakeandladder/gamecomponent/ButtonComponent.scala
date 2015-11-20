@@ -9,6 +9,14 @@ import snakeandladder.gameevent.MouseEventListener
 import snakeandladder.gameobject.{GameObjectUpdate, GameObject}
 import snakeandladder.utility.AssetManager
 
+/**
+ * Kelas abstrak dari tombol yand diturunkan menjadi checkbox dan button
+ * @param initialX posisi X
+ * @param initialY posisi Y
+ * @param title judul/text dari tombol
+ * @param width lebar dari tombol
+ * @param height tinggi dari tombol
+ */
 abstract class ButtonComponent(initialX : Double, initialY : Double, title : String, width : Double, height : Double)
 extends GameObject(initialX, initialY) with MouseEventListener{
 
@@ -18,8 +26,14 @@ extends GameObject(initialX, initialY) with MouseEventListener{
    */
   protected var buttonFont : Font = AssetManager.getFont("DefaultFont")
 
+  /**
+   * Lebar dari judul tombol
+   */
   protected var buttonTitleWidth : Double = AssetManager.getFontMetrics("DefaultFont").stringWidth(title)
 
+  /**
+   * Warna foreground dari tombol
+   */
   protected var buttonFaceColor : Color = AssetManager.getColor("ButtonFaceColor")
   /**
    * Warna bayangan saat di hover

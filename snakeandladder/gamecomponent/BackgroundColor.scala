@@ -6,7 +6,13 @@ import java.awt.{Color, Graphics2D, Graphics}
 import snakeandladder.engine.GameDisplaySettings
 import snakeandladder.gameobject.GameObject
 
+/**
+ * Background yang menggunakan warna melainkan gambar
+ */
 class BackgroundColor(backgroundBlur: Color) extends GameObject(0,0){
+  /**
+   * Objek yang dirender sebagai background
+   */
   private var background : Rectangle2D.Double =
     new Rectangle2D.Double(x,y,GameDisplaySettings.WINDOW_WIDTH,GameDisplaySettings.WINDOW_HEIGHT)
   /**

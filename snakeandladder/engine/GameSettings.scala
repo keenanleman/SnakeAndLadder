@@ -37,7 +37,7 @@ object DiceSettings{
   /**
    * Durasi animasi perputaran dadu
    */
-  val ROLL_TIME_IN_SECONDS : Int = 2 * GameEngineSettings.getDefaultFPS
+  val ROLL_TIME_IN_SECONDS : Int = 1 * GameEngineSettings.getDefaultFPS
 
   val DICE_NAME_FORMAT = "Dice%d"
 
@@ -60,14 +60,6 @@ object BoardSettings{
      * Jumlah warna tile
      */
     val TILE_COLOR_NUM = 4
-    /**
-     * Warna tile bernomor ganjil
-     */
-    val TILE_COLOR_ODD = Color.YELLOW
-    /**
-     * Warna tile bernomor genap
-     */
-    val TILE_COLOR_EVEN = Color.BLACK
 }
 
 object SnakeSettings{
@@ -97,11 +89,10 @@ object ButtonSettings{
 }
 
 object ResourcePath{
-  val BACKGROUND_WOOD_PATH : String = new UniversalPath("src/resources/wood_texture.jpg").toString
-  println(BACKGROUND_WOOD_PATH)
-  val DEFAULT_FONT_PATH : String =  new UniversalPath("src/resources/JosefinSans-SemiBold.ttf").toString
-  val DICE_IMAGES_PATH_FORMAT : String = new UniversalPath("src/resources/Dice-0%d.png").toString
-  val SNAKE_TEXTURE_PATH : String = new UniversalPath("src/resources/snake_texture.png").toString
+  val BACKGROUND_WOOD_PATH : String = new UniversalPath("/wood_texture.jpg").toString
+  val DEFAULT_FONT_PATH : String =  new UniversalPath("/JosefinSans-SemiBold.ttf").toString
+  val DICE_IMAGES_PATH_FORMAT : String = new UniversalPath("/Dice-0%d.png").toString
+  val SNAKE_TEXTURE_PATH : String = new UniversalPath("/snake_texture.png").toString
 }
 
 object LabelSettings{
@@ -116,4 +107,8 @@ object GameRulesSettings{
   val MIN_PLAYER = 2
   val MIN_LADDER = 4
   val MIN_SNAKE = 4
+}
+
+object LadderSettings{
+  val LADDER_GAP = 25
 }

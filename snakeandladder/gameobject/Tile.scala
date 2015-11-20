@@ -27,14 +27,21 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
    */
   private val titleY : Float = (BoardSettings.TILE_SIZE - 5 + y).asInstanceOf[Float]
 
+  /**
+   * Warna dari judul tile
+   */
   private var titleColor : Color = _
 
+  /* Menentukan apakah tile ganjil atau genap */
   if(tileNumber % 2 == 0){
     titleColor = AssetManager.getColor("TileColorOdd")
   }else{
     titleColor = AssetManager.getColor("TileColorEven")
   }
 
+  /**
+   * Font dari judul/text tile
+   */
   private val titleFont : Font = AssetManager.getFont("DefaultFont")
 
   /**
@@ -42,13 +49,47 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
     */
   private var hasSnake : Boolean = false
 
+  /**
+    * Status tile mengenai kepemilikan ular
+    */
   private var hasLadder : Boolean = false
 
+  /**
+    * Kepala ular yang dimiliki tile
+    */
   private var snakeHead : Snake = null
+
+  /**
+    * Tangga yang dimiliki tile
+    */
+  private var ladder : Ladder = null
+
+  /**
+   * Mengeset ular pada tile
+   * @param snakeHead ular yang di-set kepada tile
+   */
   def setSnakeHead(snakeHead : Snake): Unit ={
     this.snakeHead = snakeHead
   }
+  /**
+   * Mengembalikan ular yang dimiliki tile
+   * @return ular yang dimiliki tile
+   */
   def getSnakeHead : Snake = snakeHead
+
+  /**
+   * Mengeset tangga pada tile
+   * @param ladder tangga yang di-set kepada tile
+   */
+  def setLadder(ladder : Ladder): Unit ={
+    this.ladder = ladder
+  }
+
+  /**
+   * Mengembalikan tanga yang dimiliki tile
+   * @return tangga yang dimiliki tile
+   */
+  def getLadder : Ladder = ladder
 
   /**
    * Mengembalikan nomor tile
@@ -71,8 +112,15 @@ class Tile(initialX : Double, initialY : Double, tileNumber : Int, color : Color
     hasSnake = true
   }
 
+  /**
+   * Mengembalikan status kepemilikan tangga
+   * @return
+   */
   def isHasLadder : Boolean = hasLadder
 
+  /**
+   * Menandai status kepemilikan tangga
+   */
   def gotLadder : Unit = {
     hasLadder = true
   }

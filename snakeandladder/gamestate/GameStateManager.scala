@@ -97,21 +97,42 @@ object GameStateManager extends KeyListener with MouseListener with MouseMotionL
     }
   }
 
+  /**
+   * GameStateManager tidak mem-broadcast event ini
+   * @param mouseEvent event mouse
+   */
   override def mouseEntered(mouseEvent: MouseEvent): Unit = {
     // Not implemented
   }
 
+  /**
+   * GameStateManager tidak mem-broadcast event ini
+   * @param mouseEvent event mouse
+   */
   override def mouseExited(mouseEvent: MouseEvent): Unit = {
     // Not implemented
   }
 
+  /**
+   * GameStateManager tidak mem-broadcast event ini
+   * @param mouseEvent event mouse
+   */
   override def mouseReleased(mouseEvent: MouseEvent): Unit = {
     // Not implemented
   }
 
+  /**
+   * GameStateManager tidak mem-broadcast event ini
+   * @param mouseEvent event mouse
+   */
   override def mouseDragged(mouseEvent: MouseEvent): Unit = {
     // Not implemented
   }
+
+  /**
+   * GameStateManager tidak mem-broadcast event ini
+   * @param mouseEvent event mouse
+   */
   override def mouseClicked(mouseEvent: MouseEvent): Unit = {
     // Not implemented
   }

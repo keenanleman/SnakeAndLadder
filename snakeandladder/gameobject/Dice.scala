@@ -11,13 +11,22 @@ import snakeandladder.utility.AssetManager
 class Dice(initialX : Double, initialY : Double)
   extends GameObject(initialX, initialY) with GameObjectUpdate{
 
+  /**
+   * Gambar-gambar yang digunakan oleh dadu
+   */
   private var diceImages : Array[BufferedImage] = new Array[BufferedImage](7)
 
+  /*
+   * Mengambil gambar-gamber yang dibutuhkan dari AssetManager
+   */
   for(i <- 1 to 6){
     var diceName : String = String.format(DiceSettings.DICE_NAME_FORMAT,i.asInstanceOf[Object])
     diceImages(i) = AssetManager.getImage(diceName)
   }
 
+  /**
+   * Warna dari dadu
+   */
   private var diceColor : Color = AssetManager.getColor("DiceColor")
   /**
     * nilai pada mata dadu

@@ -68,7 +68,7 @@ extends GameObject(initialX, initialY) with MouseEventListener{
 
   /**
    * Mengeset aksi saat tombol di tekan
-   * @param buttonAction
+   * @param buttonAction aksi dari tombol
    */
   def setAction(buttonAction : ButtonAction): Unit ={
     this.buttonAction = buttonAction
@@ -76,7 +76,7 @@ extends GameObject(initialX, initialY) with MouseEventListener{
 
   /**
    * Merender tombol
-   * @param g2d
+   * @param g2d objek yang digunakan untuk menggambar pada canvas
    */
   protected def drawButton(g2d : Graphics2D) : Unit = {
     g2d.setColor(buttonFaceColor)
@@ -85,7 +85,7 @@ extends GameObject(initialX, initialY) with MouseEventListener{
 
   /**
    * Merender bayangan dari tombol
-   * @param g2d
+   * @param g2d objek yang digunakan untuk menggambar pada canvas
    */
   protected def drawButtonShadow(g2d : Graphics2D): Unit ={
     g2d.setColor(buttonShadowColor)
@@ -95,7 +95,7 @@ extends GameObject(initialX, initialY) with MouseEventListener{
 
   /**
    * Merender title dari tombol
-   * @param g2d
+   * @param g2d objek yang digunakan untuk menggambar pada canvas
    */
   protected def drawButtonTitle(g2d : Graphics2D) : Unit
 
@@ -115,7 +115,7 @@ extends GameObject(initialX, initialY) with MouseEventListener{
 
   /**
    * Meng-apply efek saat tombol di tekan
-   * @param event
+   * @param event event yang terjadi
    */
   protected def buttonClickedEffect(event : MouseEvent) : Unit
 

@@ -30,6 +30,9 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
    * Shape/drawable yang menjadi kepala ular
    */
   private var snakeHead : Shape = null
+  /**
+   * Paint/Texture yang digunakan untuk merender texture ular
+   */
   private var snakeTexturePaint : TexturePaint = new TexturePaint(
     AssetManager.getImage("SnakeTexture"),
     new Rectangle2D.Double(0,0,10,10)
@@ -113,8 +116,21 @@ class Snake(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
       SnakeSettings.SNAKE_HEAD_SIZE)
   }
 
+  /**
+   * Mengembalikan objek gambar ular
+   * @return objek gambar ular
+   */
   def getDrawable : Path2D = snakeDrawable
+  /**
+   * Mengembalikan tile akhir ular
+   * @return tile akhir ular
+   */
   def getTo : Tile = to
+  /**
+   * Mengembalikan tile awal ular
+   * @return tile awal ular
+   */
+  def getFrom : Tile = from
   /**
    * Digunakan untuk merender drawable dari snake
    * @param graphics graphics dari canvas pada kelas GameDisplay

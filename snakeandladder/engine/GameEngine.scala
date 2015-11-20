@@ -4,26 +4,60 @@ import java.awt.image.BufferStrategy
 import java.awt.{Color,Graphics,Graphics2D,RenderingHints,Toolkit,Font}
 import java.io.File
 import javax.imageio.ImageIO
-import snakeandladder.gamestate.{PrePlayState, GameState, GameStateManager}
+import snakeandladder.gamestate._
 import snakeandladder.utility.AssetManager
 
+/**
+ * Sebagai kelas utama yang mengatur bagaimana game akan dijalankan,
+ * mengatur 'game loop', serta menginstansiasi objek-objek utama dan 
+ * meregister resource yang digunakan game
+ */
 class GameEngine extends Runnable{
+  /**
+   * Thread yang digunakan sebagai thread utama dalam game
+   */
   private var mainThread : Thread = null
+  /**
+   * Jendela dan canvas yang digunakan game engine untuk merender objek-objek
+   * yang digunakan dalam game
+   */
   private var gameDisplay : GameDisplay = null
+
+  /**
+   * Status apakah game Main Thread sedang berjalan
+   */
   private var runningStatus : Boolean = false
+
+  /**
+   * Objek yang digunakan untuk merender pada canvas
+   */
   private var bufferStrategy : BufferStrategy = null
+
+  /**
+   * Objek yang digunakan untuk merender pada canvas
+   */
   private var graphics : Graphics = null
 
+  /**
+   * Method getter apakah game Main Thread sedang berjalan
+   */
   private def isRunning : Boolean = runningStatus
 
-
+  /**
+   * Menginisiasi GameEngine
+   */
   private def initEngine : Unit = {
     /* inisiasi gameDisplay */
     gameDisplay = new GameDisplay
+
+    /* Menambahkan evetn listener ke GameDisplay agar GameStateManager
+     * dapat mem-broadcast event ke state yang sedang aktif
+     */
     gameDisplay.getDisplayCanvas.addMouseListener(GameStateManager)
     gameDisplay.getDisplayCanvas.addKeyListener(GameStateManager)
     gameDisplay.getDisplayCanvas.addMouseMotionListener(GameStateManager)
 
+    /* Menentukan strategy buffering pada game */
     bufferStrategy = gameDisplay.getDisplayCanvas.getBufferStrategy
     if(bufferStrategy == null){
       /* Triple buffering */
@@ -34,11 +68,15 @@ class GameEngine extends Runnable{
   }
 
   /**
-   * Ada banyak komponen yang akan di inisialisasi disini
+   * Meng-instansiasi state-state yang digunakan dalam game dan
+   * juga meregister semua asset yang akan digunakan dalam game
    */
   private def initComponents : Unit = {
+    /* Meregister asset background dan efek blur pada latar belakang */
     var backgroundBlurPrimary = Color.WHITE
-    AssetManager.registerAsset("BackgroundWood",ImageIO.read(new File(ResourcePath.BACKGROUND_WOOD_PATH)))
+    AssetManager.registerAsset("BackgroundWood",ImageIO.read(
+      this.getClass().getResourceAsStream(ResourcePath.BACKGROUND_WOOD_PATH))
+    )
     AssetManager.registerAsset("BackgroundBlur",new Color(
       backgroundBlurPrimary.getRed,
       backgroundBlurPrimary.getGreen,
@@ -46,24 +84,40 @@ class GameEngine extends Runnable{
       120
     ))
 
-    AssetManager.registerAsset("SnakeTexture",ImageIO.read(new File(ResourcePath.SNAKE_TEXTURE_PATH)))
+    /* Meregister Warna-warna tambahan yang digunakan pada game */
+    AssetManager.registerAsset("OliveColor", new Color(128,128,0))
+    AssetManager.registerAsset("BlueVioletColor", new Color(138,43,226))
 
-    var defaultFont : Font = Font.createFont(Font.TRUETYPE_FONT,new File(ResourcePath.DEFAULT_FONT_PATH))
+    /* Meregister Texture ular*/
+    AssetManager.registerAsset("SnakeTexture",ImageIO.read(
+      this.getClass().getResourceAsStream(ResourcePath.SNAKE_TEXTURE_PATH))
+    )
+
+    /* Meregister font yang digunakan*/
+    var defaultFont : Font = Font.createFont(Font.TRUETYPE_FONT,
+      this.getClass().getResourceAsStream(ResourcePath.DEFAULT_FONT_PATH)
+      )
     AssetManager.registerAsset("DefaultFont",defaultFont.deriveFont(Font.PLAIN,15),
       graphics.getFontMetrics(defaultFont.deriveFont(Font.PLAIN,15)))
 
+    /* Meregister warna background untuk board */
     AssetManager.registerAsset("BoardBackgroundColor",new Color(184,115,51,180))
 
+    /* Meregister warna tile ganjil */
     AssetManager.registerAsset("TileColorOdd",Color.YELLOW)
 
+    /* Meregister warna tile genap */
     AssetManager.registerAsset("TileColorEven",Color.BLACK)
 
+    /* Meregister warna bayangan*/
     AssetManager.registerAsset("PrimaryShadowColor",new Color(Color.black.getRed,Color.black.getGreen,Color.black.getBlue,50))
-    AssetManager.registerAsset("SecondaryShadowColor",new Color(Color.blue.getRed,Color.blue.getGreen,Color.blue.getBlue,100))
+    AssetManager.registerAsset("SecondaryShadowColor",new Color(Color.green.getRed,Color.green.getGreen,Color.green.getBlue,100))
 
+    /* Meregister warna untuk tombol*/
     AssetManager.registerAsset("ButtonTitleColor", Color.BLACK)
     AssetManager.registerAsset("ButtonFaceColor", Color.WHITE)
 
+    /* Meregister warna untuk label */
     var LabelPrimaryColor = Color.WHITE
     AssetManager.registerAsset("LabelColor", new Color(
       LabelPrimaryColor.getRed,
@@ -73,18 +127,24 @@ class GameEngine extends Runnable{
     ))
     AssetManager.registerAsset("LabelTitleColor", Color.BLACK)
 
+    /* Meregister warna untuk checkbox */
     AssetManager.registerAsset("CheckboxTitleColor", Color.BLACK)
-    AssetManager.registerAsset("CheckboxCheckedColor", Color.BLUE)
+    AssetManager.registerAsset("CheckboxCheckedColor", Color.GREEN)
     AssetManager.registerAsset("CheckboxUnCheckedColor", Color.WHITE)
 
+    /* Meregister warna untuk panel */
     AssetManager.registerAsset("PanelColor",new Color(184,115,51,180))
 
+    /* Meregister gambar untuk dadu */
     for(i <- 1 to 6){
       var diceName : String = String.format(DiceSettings.DICE_NAME_FORMAT.toString,i.asInstanceOf[Object])
       var dicePath : String = String.format(ResourcePath.DICE_IMAGES_PATH_FORMAT,i.asInstanceOf[Object])
-      AssetManager.registerAsset(diceName,ImageIO.read(new File(dicePath)))
+      AssetManager.registerAsset(diceName,ImageIO.read(
+        this.getClass.getResource(dicePath))
+      )
     }
 
+    /* Meregister warna untuk dadu */
     var DicePrimaryColor = Color.YELLOW
     AssetManager.registerAsset("DiceColor",new Color(
       DicePrimaryColor.getRed,
@@ -93,14 +153,22 @@ class GameEngine extends Runnable{
       200
     ))
 
+    /* Menginstansiasi state PrePlayState */
+    val mainMenuState : GameState = new MainMenuState("MainMenuState",this)
+    GameStateManager.addState(mainMenuState)
     val prePlayState : GameState = new PrePlayState("PrePlayState")
     GameStateManager.addState(prePlayState)
+    val settingsState : GameState = new SettingsState("SettingsState")
+    GameStateManager.addState(settingsState)
+    val aboutState : GameState = new AboutState("AboutState")
+    GameStateManager.addState(aboutState)
 
-    GameStateManager.setActiveState("PrePlayState")
+    GameStateManager.setActiveState("MainMenuState")
+
   }
 
   /**
-   * Main render
+   * Merender dan mengupdate (running state) state yang aktif
    */
   private def runGameState : Unit = {
     graphics = bufferStrategy.getDrawGraphics
@@ -118,6 +186,9 @@ class GameEngine extends Runnable{
     graphics.dispose
   }
 
+  /**
+   * Mengaktifkan antialiasing
+   */
   private def antialiasing(graphics : Graphics) : Unit = {
     /**
      * Mengkonfigurasi graphics untuk mengaktifkan antialiasing
@@ -150,6 +221,7 @@ class GameEngine extends Runnable{
       if(!isRunning) return
       runningStatus = false
       mainThread.join
+      System.exit(0)
     }
   }
 

@@ -9,6 +9,7 @@ import java.util.Iterator
 
 import snakeandladder.engine.BoardSettings
 import snakeandladder.gameevent.MouseEventListener
+import snakeandladder.gamestate.GameStage
 import snakeandladder.utility.AssetManager
 
 /**
@@ -21,16 +22,34 @@ import snakeandladder.utility.AssetManager
  */
 class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   extends GameObject(initialX,initialY) with GameObjectUpdate with MouseEventListener{
-  /* multidimensional array dari tile */
+  /**
+   * multidimensional array dari tile
+   */
   private var tiles : Array[Array[Tile]] = Array.ofDim[Tile](numRow,numCol)
+  /**
+   * Array yang mengandung objek yang sama dari array tiles,
+   * namun di buat agar dapat di sesuaikan dengan nomor tile pada game
+   */
   private var tilesRefNum : Array[Tile] = new Array[Tile](numRow * numCol)
 
+  /**
+   * Warna dari tile ganjil
+   */
   private var tileColorOdd : Color = AssetManager.getColor("TileColorOdd")
 
+  /**
+   * Warna dari tile genap
+   */
   private var tileColorEven : Color = AssetManager.getColor("TileColorEven")
 
+  /**
+   * Warna dari background
+   */
   private var boardBackgroundColor : Color = AssetManager.getColor("BoardBackgroundColor")
 
+  /**
+   * Background dari board
+   */
   private var boardBackground : RoundRectangle2D.Double = null
   /**
    * Random generator
@@ -38,13 +57,26 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   private val random : Random = new Random(System.nanoTime())
 
   /**
+   * GameStage yang digunakan pada game
+   */
+  private var gameStage : GameStage = null
+  /**
    * Array untuk menyimpan object Snake
    */
   private var snakes : Array[Snake] = null
 
-  //private var ladders : Array[Ladder] = null
+  /**
+   * Array tangga yang digunakan pada board
+   */
+  private var ladders : Array[Ladder] = null
 
+  /**
+   * Lebar board + border(dibuat diatas panel)
+   */
   private var fullWidth : Double = 0
+  /**
+   * Tinggi board + border(dibuat diatas panel)
+   */
   private var fullHeight : Double = 0
 
   /**
@@ -55,11 +87,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   /**
    * List dari pemain
    */
-  private val players : ArrayList[Player] = new ArrayList[Player]
-  /**
-   * Iterator dari List pemain
-   */
-  private val playerIterator : Iterator[Player] = players.iterator()
+  private var players : Array[Player] = null
 
 
   /* Menginisiasi board */
@@ -105,14 +133,36 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   }
 
   /**
+   * Digunakan untuk mengeset GameStage
+   * @param gameStage game stage yang digunakan
+   */
+  def setGameStage(gameStage : GameStage)  : Unit = {
+    this.gameStage = gameStage
+  }
+
+  /**
+   * Mengembalikan GameStage yang digunakan board
+   * @return GameStage yang digunakan
+   */
+  def getGameStage : GameStage = gameStage
+
+  /**
    * Menjalankan pemain pada gilirannya(Masih membutuhkan kelas GameStage)
    */
   def turnPlayer : Unit = {
     dice.roll
   }
 
+  /**
+   * Mengembalikan tinggi dari board
+   * @return tinggi dari board
+   */
   def getHeight : Double = fullHeight
 
+  /**
+   * Mengembalikan lebar dari board
+   * @return lebar dari board
+   */
   def getWidth : Double = fullHeight
 
   /**
@@ -128,11 +178,6 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
    */
   def getDice : Dice = dice
 
-  /**
-   * Mengembalikan array dari semua pemain yang ada pada board
-   * @return array dari pemain
-   */
-  def getPlayers : Array[Player] = players.toArray(new Array[Player](players.size()))
 
   /**
    * Mengembalikan array dari semua snake yang ada pada board
@@ -140,8 +185,11 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
    */
   def getSnakes : Array[Snake]  = snakes
 
-
-  //def getLadders : Array[Ladder] = ladders
+  /**
+   * Mengembalikan array dari semua ladder yang ada pada board
+   * @return array dari ladder
+   */
+  def getLadders : Array[Ladder] = ladders
 
   /**
    * Mengeset dadu pada board
@@ -152,15 +200,22 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   }
 
   /**
-   * Menambah player kedalam board
-   * @param player
+   * Mengeset player kedalam board
+   * @param players
    */
-  def addPlayer(player : Player) : Unit = {
-    players.add(player)
+  def setPlayers(players : Array[Player]) : Unit = {
+    this.players = players
   }
 
   /**
+   * Mengembalikan array dari pemain
+   * @return mengembalikan array dari pemain pada board
+   */
+  def getPlayers : Array[Player] = players
+
+  /**
    * Method untuk mempopulasi board dengan snake
+   * @param numOfSnake jumlah dari ular
    */
   def populateSnake(numOfSnake : Int) : Unit = {
     snakes = new Array[Snake](numOfSnake)
@@ -169,16 +224,20 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
     var maxIndex = (numRow * numCol) + 1
     for(i <- 0 until numOfSnake){
       from = 1 + random.nextInt(maxIndex - 1)
-      while(getTileByNumber(from).isHasSnake){
+      while(getTileByNumber(from).isHasSnake || getTileByNumber(from).isHasLadder ||  from == 100 || from == 1){
         from = 1 + random.nextInt(maxIndex - 1)
+      }
+      to = 1 + random.nextInt(maxIndex - 1)
+      while(to == from || getTileByNumber(to).isHasSnake || getTileByNumber(to).isHasLadder ){
+        to = 1 + random.nextInt(maxIndex - 1)
+      }
+      if(from < to){
+        var tmp = from
+        from = to
+        to = tmp
       }
       var fromTile : Tile = getTileByNumber(from)
       fromTile.gotSnake
-
-      to = 1 + random.nextInt(maxIndex - 1)
-      while(to >= from || getTileByNumber(to).isHasSnake){
-        to = 1 + random.nextInt(maxIndex - 1)
-      }
       var toTile : Tile = getTileByNumber(to)
       toTile.gotSnake
       snakes(i) = new Snake(fromTile, toTile)
@@ -187,30 +246,41 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   }
 
   /**
-   * Method untuk mempopulasi board dengan snake
-   *
+   * Method untuk mempopulasi board dengan tangga/ladder
+   * @param numOfLadder jumlah dari tangga
+   */
   def populateLadder(numOfLadder : Int) : Unit = {
     ladders = new Array[Ladder](numOfLadder)
     var from : Int = 0
     var to : Int = 0
     var maxIndex = (numRow * numCol) + 1
-    for(i <- 0 until numOfLadder){
+    var i : Int = 0
+    while(i < numOfLadder){
       from = 1 + random.nextInt(maxIndex - 1)
-      while(getTileByNumber(from).isHasSnake){
+      while(getTileByNumber(from).isHasLadder ||getTileByNumber(from).isHasSnake || from == 100 || from == 1){
         from = 1 + random.nextInt(maxIndex - 1)
       }
-      var fromTile : Tile = getTileByNumber(from)
-      fromTile.gotLadder
-
       to = 1 + random.nextInt(maxIndex - 1)
-      while(to <= from || getTileByNumber(to).isHasSnake){
+      while(to == from || getTileByNumber(to).isHasLadder || getTileByNumber(to).isHasSnake || to == 100 || to == 1 ){
         to = 1 + random.nextInt(maxIndex - 1)
       }
+      if(from > to){
+        var tmp = from
+        from = to
+        to = tmp
+      }
+      var fromTile : Tile = getTileByNumber(from)
       var toTile : Tile = getTileByNumber(to)
-      toTile.gotLadder
-      ladders(i) = new Ladder(fromTile, toTile)
+      var gradien = math.abs(fromTile.getX - toTile.getX) / math.abs(fromTile.getY - toTile.getY)
+      if(gradien <= 2.25 || gradien >= 5){
+        fromTile.gotLadder
+        toTile.gotLadder
+        ladders(i) = new Ladder(fromTile, toTile)
+        fromTile.setLadder(ladders(i))
+        i += 1
+      }
     }
-  }*/
+  }
 
   /**
    * Method render dari board, merender tile-tile yang dibutuhkan board
@@ -228,10 +298,16 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
     }
   }
 
+  /**
+   * Method yand dipanggil ketika suatu event di broadcast pada board
+   * @param event event yand diboardcast
+   */
   override def triggeredMouseEvent(event: MouseEvent): Unit = {
     if(dice.getDrawable.contains(new Point2D.Double(event.getX,event.getY))){
       if(MouseEvent.getMouseModifiersText(event.getModifiersEx).equals("Button1")){
-        turnPlayer
+        if(!gameStage.isWin) {
+          turnPlayer
+        }
       }
     }
   }
@@ -242,7 +318,15 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
    */
   override def update(): Unit = {
     if(dice.getCurrentValue != 0){
-      players.get(0).moveToTile(getTileByNumber(players.get(0).getCurrentTile + dice.getCurrentValue))
+      var currentPlayer = gameStage.nextTurn
+      var nextTile = currentPlayer.getCurrentTile + dice.getCurrentValue
+      var bounceBack = 0
+      if(nextTile > 100){
+        bounceBack = nextTile - 100
+        currentPlayer.bounceTo100(bounceBack)
+      } else{
+        currentPlayer.moveToTile(getTileByNumber(nextTile))
+      }
       dice.resetDice
     }
   }

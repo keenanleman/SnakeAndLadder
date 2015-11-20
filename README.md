@@ -2,30 +2,21 @@
 
 ## Untuk Kontributor
 
-### Kelas-kelas yang belum ada (TODO)
+Kita sekarang menggunakan SBT (Simple Build Tool) karena beberapa masalah saat packaging dengan IDE,
+bagi yang bisa menggunakan SBT, bisa menjalankan
+```bash
+  sbt run
+```
+untuk meng-run program atau
+```bash
+sbt package
+```
+untuk membuat file .jar baru.
 
-* Kelas Ladder: Representasi dari tangga
-* Kelas GameStage: Untuk me-manage jalannya permainan, bisa digabung dengan board
-* Kelas SettingsState: Untuk melakukan pengaturan
-* Kelas MainMenuState: Tampilan awal dan main menu
-* Kelas AboutState: Menampilkan informasi author program
-* ___Kalau ada yang kurang bisa ditambah disini___
+Atau bisa langsung menjalankan .jar yang ada, dengan
+```bash
+scalac -classpath snakeandladder.jar snakeandladder.Launcher
+```
 
-### Kontributor
-
-Jika ada pertanyaan mengenai source code yang sudah dibuat bisa di tanya langsung ke kontributornya
-
-* Barsya: Dadu 
-* Mirza: Dadu
-* Samuel: AssetManager,Ladder(belum)
-* Marcho: GameStage(belum)
-* Rendra: Ladder(belum)
-* Keenan: sisanya
-
-### Kelas-kelas yang belum punya kontributor
-
-* Kelas SettingsState: Untuk melakukan pengaturan
-* Kelas MainMenuState: Tampilan awal dan main menu
-* Kelas AboutState: Menampilkan informasi author program
-* ___Kalau ada yang kurang bisa ditambah disini___
+Dokumentasi/API ada di file __api.zip__
 

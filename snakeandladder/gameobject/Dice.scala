@@ -37,7 +37,7 @@ class Dice(initialX : Double, initialY : Double)
     */
   private var diceUpdateDelayer	: Int = 0
   /**
-    * delayer untuk mengocSepiaColorok dadu
+    * delayer untuk mengocok dadu
     */
   private var rollDelayer : Int = 0
   /**

@@ -80,15 +80,14 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   private var fullHeight : Double = 0
 
   /**
+   * Apakah masih ada animasi yang berjalan
+   */
+  private var animationRolling = false
+
+  /**
    * Dadu yang digunakan board
    */
   private var dice : Dice = null
-
-  /**
-   * List dari pemain
-   */
-  private var players : Array[Player] = null
-
 
   /* Menginisiasi board */
   initBoard
@@ -200,20 +199,6 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
   }
 
   /**
-   * Mengeset player kedalam board
-   * @param players
-   */
-  def setPlayers(players : Array[Player]) : Unit = {
-    this.players = players
-  }
-
-  /**
-   * Mengembalikan array dari pemain
-   * @return mengembalikan array dari pemain pada board
-   */
-  def getPlayers : Array[Player] = players
-
-  /**
    * Method untuk mempopulasi board dengan snake
    * @param numOfSnake jumlah dari ular
    */
@@ -271,8 +256,8 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
       }
       var fromTile : Tile = getTileByNumber(from)
       var toTile : Tile = getTileByNumber(to)
-      var gradien = math.abs(fromTile.getX - toTile.getX) / math.abs(fromTile.getY - toTile.getY)
-      if(gradien <= 2.25 || gradien >= 5){
+      var gradien = math.abs(fromTile.getY - toTile.getY) / math.abs(fromTile.getX - toTile.getX)
+      if(gradien <= 2 && gradien >= 1){
         fromTile.gotLadder
         toTile.gotLadder
         ladders(i) = new Ladder(fromTile, toTile)
@@ -287,8 +272,6 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
    * @param graphics graphics dari canvas pada kelas GameDisplay
    */
   override def render(graphics: Graphics) : Unit = {
-    /* Test Code (akan di ubah ketika kelas GameState selesai dibuat*/
-
     graphics.setColor(boardBackgroundColor)
     graphics.asInstanceOf[Graphics2D].fill(boardBackground)
     for (i <- 0 until numRow) {
@@ -300,7 +283,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
 
   /**
    * Method yand dipanggil ketika suatu event di broadcast pada board
-   * @param event event yand diboardcast
+   * @param event event yand dibroadcast
    */
   override def triggeredMouseEvent(event: MouseEvent): Unit = {
     if(dice.getDrawable.contains(new Point2D.Double(event.getX,event.getY))){
@@ -317,8 +300,9 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
    * data
    */
   override def update(): Unit = {
+    var currentPlayer = gameStage.getCurrentPlayer
     if(dice.getCurrentValue != 0){
-      var currentPlayer = gameStage.nextTurn
+      animationRolling = true
       var nextTile = currentPlayer.getCurrentTile + dice.getCurrentValue
       var bounceBack = 0
       if(nextTile > 100){
@@ -328,6 +312,12 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
         currentPlayer.moveToTile(getTileByNumber(nextTile))
       }
       dice.resetDice
+    }else if(currentPlayer.isComputerPlayer && !animationRolling){
+      turnPlayer
+    }
+    if(currentPlayer.isFinishedTurn && animationRolling){
+       animationRolling = false
+       gameStage.nextTurn
     }
   }
 }

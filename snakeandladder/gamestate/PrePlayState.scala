@@ -167,7 +167,6 @@ class PrePlayState(stateTitle : String) extends GameState(stateTitle){
         /* Menginstansiasi game stage */
         var gameStage : GameStage = new GameStage(numOfPlayer, board)
         board.setGameStage(gameStage)
-        board.setPlayers(gameStage.getPlayers)
         board.populateSnake(numOfSnake)
         board.populateLadder(numOfLadder)
 

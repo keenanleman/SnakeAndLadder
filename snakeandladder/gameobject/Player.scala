@@ -58,6 +58,26 @@ class Player(initialTile : Tile,playerColor : Color, board : Board) extends Game
    * Posisi tempat player akan dipindahkan
    */
   private var destinationTile : Int = initialTile.getTileNumber
+  /**
+   * Status apakah player dijalankan komputer
+   */
+  private var computerPlayer : Boolean = false
+
+  /**
+   * Mengembalikan status apalah player
+   * dijalankan oleh komputer
+   * @return status computer player
+   */
+  def isComputerPlayer : Boolean = computerPlayer
+
+  /**
+   * Mengeset apakah player merupakan pemain
+   * yang akan digerakan komputer
+   * @param computerPlayer true jika pemain akan di gerakanan komputer
+   */
+  def setComputerPlayer(computerPlayer : Boolean) : Unit = {
+    this.computerPlayer = computerPlayer
+  }
 
   /**
    * Setiap objek/benda didalam game memiliki method render yang digunakan untuk
@@ -132,9 +152,11 @@ class Player(initialTile : Tile,playerColor : Color, board : Board) extends Game
     */
   def moveToFollowSnake : Unit = {
     if(!snakeIterator.hasNext){
+      if(snakeIterator.getPoint.getX != 0){
+        x = snakeIterator.getPoint.getX - PlayerSettings.PLAYER_REL_POS_TO_TILE
+        y = snakeIterator.getPoint.getY - PlayerSettings.PLAYER_REL_POS_TO_TILE
+      }
       snakeIterator.next
-      x = snakeIterator.getPoint.getX - PlayerSettings.PLAYER_REL_POS_TO_TILE
-      y = snakeIterator.getPoint.getY - PlayerSettings.PLAYER_REL_POS_TO_TILE
     }else{
       x = followSnake.getTo.getX + PlayerSettings.PLAYER_REL_POS_TO_TILE
       y = followSnake.getTo.getY + PlayerSettings.PLAYER_REL_POS_TO_TILE
@@ -168,6 +190,16 @@ class Player(initialTile : Tile,playerColor : Color, board : Board) extends Game
     * @return tile yang ditempati player
     */
   def getCurrentTile : Int = currentTile
+
+  /**
+   * Mengembalikan apakah pemain telah menyelesaikan
+   * gilirannya
+   * @return true jika sudah false jika sebaliknya
+   */.
+  def isFinishedTurn : Boolean = {
+    return destinationTile == currentTile
+  }
+
 
   /**
    * Memindahkan player ke tile tertentu

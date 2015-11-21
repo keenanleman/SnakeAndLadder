@@ -96,11 +96,6 @@ class Ladder(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
     }
     leftDrawable.lineTo(nextX, nextY)
     rightDrawable.lineTo(nextX + (iterator.getYStep * xOsilationPattern), nextY + (iterator.getXStep * yOsilationPattern))
-    if(x > x1){
-      var tmp = leftDrawable
-      leftDrawable = rightDrawable
-      rightDrawable = tmp
-    }
   }
 
   /**

@@ -190,7 +190,7 @@ object GameRulesSettings{
   /**
    * Jumlah minimum player
    */
-  val MIN_PLAYER = 2
+  val MIN_PLAYER = 1
   /**
    * Jumlah minimum tangga
    */

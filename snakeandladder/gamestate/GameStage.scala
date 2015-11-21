@@ -22,7 +22,8 @@ class GameStage(numberOfPlayer : Int, board : Board) {
     Color.GRAY,
     Color.ORANGE,
     AssetManager.getColor("BlueVioletColor"),
-    AssetManager.getColor("OliveColor"))
+    AssetManager.getColor("OliveColor"),
+    AssetManager.getColor("SepiaColor"))
 
   /**
    * Indeks array dari pemain yang sedang mendapat giliran

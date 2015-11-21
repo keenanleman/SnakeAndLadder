@@ -77,7 +77,6 @@ class GameEngine extends Runnable{
     AssetManager.registerAsset("MainMenuBackground",ImageIO.read(
       this.getClass().getResourceAsStream(ResourcePath.MAIN_BACKGROUND_PATH)
     ))
-    println("ok")
 
     AssetManager.registerAsset("BackgroundWood",ImageIO.read(
       this.getClass().getResourceAsStream(ResourcePath.BACKGROUND_WOOD_PATH))
@@ -95,6 +94,7 @@ class GameEngine extends Runnable{
     /* Meregister Warna-warna tambahan yang digunakan pada game */
     AssetManager.registerAsset("OliveColor", new Color(128,128,0))
     AssetManager.registerAsset("BlueVioletColor", new Color(138,43,226))
+    AssetManager.registerAsset("SepiaColor", new Color(94,38,18))
 
     /* Meregister Texture ular*/
     AssetManager.registerAsset("SnakeTexture",ImageIO.read(

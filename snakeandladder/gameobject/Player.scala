@@ -195,7 +195,7 @@ class Player(initialTile : Tile,playerColor : Color, board : Board) extends Game
    * Mengembalikan apakah pemain telah menyelesaikan
    * gilirannya
    * @return true jika sudah false jika sebaliknya
-   */.
+   */
   def isFinishedTurn : Boolean = {
     return destinationTile == currentTile
   }

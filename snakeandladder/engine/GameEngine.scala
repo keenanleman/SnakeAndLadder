@@ -74,9 +74,17 @@ class GameEngine extends Runnable{
   private def initComponents : Unit = {
     /* Meregister asset background dan efek blur pada latar belakang */
     var backgroundBlurPrimary = Color.WHITE
+    AssetManager.registerAsset("MainMenuBackground",ImageIO.read(
+      this.getClass().getResourceAsStream(ResourcePath.MAIN_BACKGROUND_PATH)
+    ))
+    println("ok")
+
     AssetManager.registerAsset("BackgroundWood",ImageIO.read(
       this.getClass().getResourceAsStream(ResourcePath.BACKGROUND_WOOD_PATH))
     )
+
+    AssetManager.registerAsset("LadderColor",new Color(188, 198, 204))
+
     AssetManager.registerAsset("BackgroundBlur",new Color(
       backgroundBlurPrimary.getRed,
       backgroundBlurPrimary.getGreen,

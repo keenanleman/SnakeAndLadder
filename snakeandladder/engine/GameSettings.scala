@@ -149,6 +149,10 @@ object ButtonSettings{
 
 object ResourcePath{
   /**
+   * Path file untuk gambar background main menu
+   */
+  val MAIN_BACKGROUND_PATH : String = new UniversalPath("/main_background.png").toString
+  /**
    * Path file untuk gambar background
    */
   val BACKGROUND_WOOD_PATH : String = new UniversalPath("/wood_texture.jpg").toString

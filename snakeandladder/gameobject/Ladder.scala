@@ -36,6 +36,12 @@ class Ladder(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
    * Objek yang dirender sebagai tiang kanan dari tangga
    */
   private var rightDrawable: Path2D.Double = new Path2D.Double
+
+  /**
+   * Warna dari tangga
+   */
+  private var ladderColor = AssetManager.getColor("LadderColor")
+
   /**
     * Pattern osilasi x
     */
@@ -121,7 +127,7 @@ class Ladder(from : Tile, to : Tile) extends GameObject(from.getX,from.getY) {
   override def render(graphics : Graphics) : Unit = {
     var g2d : Graphics2D = graphics.asInstanceOf[Graphics2D]
     g2d.setStroke(SnakeSettings.SNAKE_STROKE)
-    g2d.setColor(Color.RED)
+    g2d.setColor(ladderColor)
     g2d.draw(leftDrawable)
     g2d.draw(rightDrawable)
   }

@@ -15,8 +15,7 @@ class MainMenuState(stateTitle : String, gameEngine : GameEngine) extends GameSt
    */
   override def init: Unit = {
     /* Instansiasi komponen pembentuk background pada state */
-    var background : Background = new Background(AssetManager.getImage("BackgroundWood"))
-    var backgroundBlur : BackgroundColor = new BackgroundColor(AssetManager.getColor("BackgroundBlurColor"))
+    var background : Background = new Background(AssetManager.getImage("MainMenuBackground"))
 
     /* Instansiasi komponen pembentuk panel */
     var middlePanelHeight : Double = 200
@@ -76,7 +75,6 @@ class MainMenuState(stateTitle : String, gameEngine : GameEngine) extends GameSt
 
     /* Menambah background dan background blur */
     addComponentObject(background)
-    addComponentObject(backgroundBlur)
 
     /* Menambah panel pada state */
     addComponentObject(middlePanel)

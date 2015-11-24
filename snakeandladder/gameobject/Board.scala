@@ -213,7 +213,7 @@ class Board(initialX : Double, initialY : Double, numRow : Int, numCol : Int)
         from = 1 + random.nextInt(maxIndex - 1)
       }
       to = 1 + random.nextInt(maxIndex - 1)
-      while(to == from || getTileByNumber(to).isHasSnake || getTileByNumber(to).isHasLadder ){
+      while(to == from || getTileByNumber(to).isHasSnake || getTileByNumber(to).isHasLadder || to == 100 || to == 1 ){
         to = 1 + random.nextInt(maxIndex - 1)
       }
       if(from < to){

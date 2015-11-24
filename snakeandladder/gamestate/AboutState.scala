@@ -32,13 +32,13 @@ class AboutState(stateTitle : String) extends GameState(stateTitle){
     var authorLabel2 : Label =
       new Label(300,middlePanelY + 60,"Barsya Prastoro | 2014730042")
     var authorLabel3 : Label =
-      new Label(300,middlePanelY + 100,"Mirza Lazuardi | 201473")
+      new Label(300,middlePanelY + 100,"Mirza Lazuardi | 2014730068")
     var authorLabel4 : Label =
       new Label(300,middlePanelY + 140,"Samuel Lusandi | 2014730001")
     var authorLabel5 : Label =
       new Label(300,middlePanelY + 180,"Louise Marcho | 2014730002")
     var authorLabel6 : Label =
-      new Label(300,middlePanelY + 220,"Krisogonus F Rendra | 201473")
+      new Label(300,middlePanelY + 220,"Krisogonus F Rendra | 2014730022")
 
     /* Menginstansiasi tombol 'Main Menu' */
     var exitToMainMenu : Button = new Button(300,middlePanelY + 300, "Main Menu", 100, ButtonSettings.BUTTON_HEIGHT)

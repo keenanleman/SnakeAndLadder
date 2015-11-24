@@ -20,3 +20,4 @@ scala -classpath snakeandladder.jar snakeandladder.Launcher
 
 * Dokumentasi/API ada di file [api.zip](api.zip)
 * Penjelasan singkat mengenai Desain program dapat dilihat [disini](DesainSnakeAndLadder.md)
+* Presentasi ada di folder Presentasi
